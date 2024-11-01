@@ -1,0 +1,52 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[margin=1.1in]{geometry}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+
+\newcommand{\spacer}{\vspace{.4cm}}
+
+\setlength{\parindent}{0cm}
+
+\newcommand{\dist}{\mathop\mathrm{dist}\nolimits}
+\newcommand{\diam}{\mathop\mathrm{diam}\nolimits}
+\newcommand{\CLB}{\mathop\mathrm{CLB}\nolimits}
+\newcommand{\HD}{\mathop\mathrm{HD}\nolimits}
+
+\newtheorem{theorem}{Theorem}
+
+\begin{document}
+
+\begin{center}
+\hrule \ \\
+\large \textsf{Math 4110/5110, Introduction to Modern Analysis, Fall 2015} \hfill
+\Large Homework \#2 \vspace{.25cm} \hrule \
+\end{center}
+
+\spacer
+
+\textbf{Due In Class:} Thursday, September 17  \spacer
+
+\textbf{Reading:} If you haven't done so already, please take a glance at \emph{Some Remarks on Writing Mathematical Proofs} by John M. Lee, available at \begin{quotation}\texttt{http://www.math.washington.edu/$\sim$lee/Writing/writing-proofs.pdf}\end{quotation} \spacer
+
+Start reading Chapter 2 in the textbook.  \spacer
+
+Prove the following statements.
+
+\begin{theorem} Let $X$ and $Y$ be arbitrary sets. A function $f:X\rightarrow Y$ is surjective if and only if $f$ has a right inverse $g$, i.e.~ a function $g:Y\rightarrow X$ such that $f(g(y))=y$ for all $y\in Y$.\end{theorem}
+
+\begin{theorem}[Exercise 2.2] The set of algebraic complex numbers is countable.
+\end{theorem}
+
+\begin{theorem}[Exercise 2.4] The set of irrational real numbers is uncountable.\end{theorem}
+
+\begin{theorem}[Exercise 2.7] Let $A_1,A_2,\dots$ be subsets of a metric space. Then: \begin{enumerate} \item[(a)] For all $n\geq 1$, $\overline{\bigcup_{i=1}^n A_i}=\bigcup_{i=1}^n \overline{A_i}$.
+\item[(b)] The set $\overline{\bigcup_{i=1}^\infty A_i}\supseteq \bigcup_{i=1}^\infty \overline{A_i}$.
+\item[(c)] The previous inclusion may be strict.
+\end{enumerate}\end{theorem}
+
+\begin{theorem}[Exercise 2.8] Let $U\subset\RR^2$ be an open set. Every point of $U$ is an accumulation point of $U$.\end{theorem}
+
+\begin{theorem} Every closed ball in a metric space (i.e. a set of the form $\overline{B}(x,r)=\{y: \dist(x,y)\leq r\}$) is a closed set.\end{theorem}
+
+\end{document}

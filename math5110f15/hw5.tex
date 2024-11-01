@@ -1,0 +1,50 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage[margin=1.1in]{geometry}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+
+\newcommand{\spacer}{\vspace{.4cm}}
+
+\setlength{\parindent}{0cm}
+
+\newcommand{\dist}{\mathop\mathrm{dist}\nolimits}
+\newcommand{\diam}{\mathop\mathrm{diam}\nolimits}
+\newcommand{\CLB}{\mathop\mathrm{CLB}\nolimits}
+\newcommand{\HD}{\mathop\mathrm{HD}\nolimits}
+
+\newtheorem{theorem}{Theorem}
+
+\begin{document}
+
+\begin{center}
+\hrule \ \\
+\large \textsf{Math 4110/5110, Introduction to Modern Analysis, Fall 2015} \hfill
+\Large Homework \#5 \vspace{.25cm} \hrule \
+\end{center}
+
+\spacer
+
+\textbf{Due In Class:} Thursday, October 22  \spacer
+
+\textbf{Reading:} Read Chapter 3 and 4.  \spacer
+
+Do the following problems. \spacer
+
+\textbf{Problem A:} Exercise 3.23 \spacer
+
+\textbf{Problem B:} Exercise 3.24(b,c) (You may assume 3.24(a) without proof.) \spacer
+
+\textbf{Problem C:} Exercise 3.24(d,e) (You may assume 3.24(a,b,c) without proof.) \spacer
+
+\textbf{Problem D:} Let $X$ be the metric space of nonempty closed subsets of $S=[0,1]^2$, equipped with the Hausdorff distance. Prove that $X$ is totally bounded, i.e.~ for all $r>0$ there exist finitely many balls of radius $r>0$ in $X$ that cover $X$. \spacer
+
+\textbf{Problem E:} Let $X$ be the metric space of nonempty closed subsets of $S=[0,1]^2$, equipped with the Hausdorff distance. Prove that $X$ is complete, i.e.~ every Cauchy sequence in $X$ converges in $X$.
+
+\emph{Hint:} Suppose that $(K_n)_{n=1}^\infty$ is a Cauchy sequence in $X$. Prove that $K_n\rightarrow K$, where $$K=\left\{x\in S:x=\lim_{i\rightarrow\infty}x_{n_i}\text{ where }x_{n_i}\in K_{n_i} \text{ for some subsequence $(K_{n_i})_{i=1}^\infty$ of $(K_n)_{n=1}^\infty$}\right\}.$$ Remember to check that $K\in X$. \spacer
+
+\textbf{Problem F:} Let $X$ be the metric space on nonempty closed subsets of $S=[0,1]^2$, equipped with the Hausdorff distance. Prove that if $(K_n)_{n=1}^\infty$ is a sequence in $X$, then there exists $K\in X$ and a subsequence $(K_{n_i})_{i=1}^\infty$ of $(K_n)_{n=1}^\infty$ such that $\lim_{i\rightarrow\infty} K_{n_i}=K$.
+
+ \emph{Remark: Your proof should be short.}
+
+\end{document}
