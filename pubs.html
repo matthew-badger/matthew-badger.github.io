@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publications & Preprints — Matthew Badger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <style>
+    /* ── Reset & Variables ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #1a1814;
+      --ink-mid:   #4a4640;
+      --ink-soft:  #7a746e;
+      --ink-faint: #c8c2ba;
+      --paper:     #f5f1eb;
+      --cream:     #ede8e0;
+      --accent:    #8b3a1e;
+      --accent2:   #3a6b8b;
+      --rule:      #d4cdc4;
+
+      --font-serif: 'EB Garamond', Georgia, serif;
+      --font-sans:  'Outfit', sans-serif;
+      --font-head:  'Outfit', sans-serif;
+      --font-mono:  'DM Mono', monospace;
+
+      --sidebar-w: 260px;
+      --max-w:     860px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 20px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── Layout ── */
+    .site-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── UConn Brand Colors ── */
+    :root {
+      --uconn-navy:      #000E2F;
+      --uconn-navy-mid:  #1B2E67;
+      --uconn-grey:      #7C878E;
+      --uconn-grey-lt:   #A2AAAD;
+      --uconn-white:     #FFFFFF;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: linear-gradient(180deg, var(--uconn-navy-mid) 0%, var(--uconn-navy) 100%);
+      color: var(--uconn-white);
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 2.5rem 1.75rem 2rem;
+    }
+
+    .sidebar-name {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--uconn-white);
+      line-height: 1.2;
+      margin-bottom: 0.3rem;
+    }
+
+    .sidebar-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 0.88rem;
+      color: var(--uconn-grey-lt);
+      margin-bottom: 2rem;
+      line-height: 1.4;
+    }
+
+    .sidebar-rule {
+      border: none;
+      border-top: 1px solid rgba(162, 170, 173, 0.25);
+      margin-bottom: 2rem;
+    }
+
+    .sidebar nav { flex: 1; }
+
+    .nav-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--uconn-grey);
+      margin-bottom: 0.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .nav-label:first-child { margin-top: 0; }
+
+    .sidebar nav a {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--uconn-grey-lt);
+      text-decoration: none;
+      padding: 0.3rem 0;
+      letter-spacing: 0.03em;
+      transition: color 0.15s;
+      border-left: 2px solid transparent;
+      padding-left: 0.6rem;
+      margin-left: -0.6rem;
+    }
+
+    .sidebar nav a:hover,
+    .sidebar nav a.active {
+      color: var(--uconn-white);
+      border-left-color: var(--uconn-grey-lt);
+    }
+
+    .sidebar-dept {
+      margin-top: 1.8rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(162, 170, 173, 0.25);
+    }
+
+    .sidebar-dept a {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--uconn-white);
+      text-decoration: none;
+      padding: 0.5rem 0.75rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(162,170,173,0.3);
+      text-align: center;
+      transition: background 0.15s, border-color 0.15s;
+      line-height: 1.35;
+    }
+
+    .sidebar-dept a:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: var(--uconn-grey-lt);
+    }
+
+    .sidebar-dept-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--uconn-grey);
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-contact {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(162, 170, 173, 0.25);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      line-height: 1.9;
+      color: var(--uconn-grey);
+    }
+
+    .sidebar-contact a { color: var(--uconn-grey-lt); text-decoration: none; }
+    .sidebar-contact a:hover { color: var(--uconn-white); }
+
+    /* ── Main Content ── */
+    .main {
+      flex: 1;
+      max-width: var(--max-w);
+      padding: 4rem 4rem 6rem 4.5rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: start;
+      padding-bottom: 3.5rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 4rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-text {}
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .hero-name {
+      font-family: var(--font-sans);
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.05;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-research {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--ink-mid);
+      max-width: 520px;
+    }
+
+    .hero-research strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .hero-photo {
+      width: 148px;
+      height: 148px;
+      border-radius: 4px;
+      object-fit: cover;
+      flex-shrink: 0;
+      filter: grayscale(15%);
+      box-shadow: 4px 4px 0 var(--ink-faint);
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.5rem 1.1rem;
+      border: 1.5px solid var(--ink);
+      color: var(--ink);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .btn:hover { background: var(--ink); color: var(--paper); }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover { background: #6e2d16; border-color: #6e2d16; color: white; }
+
+    /* ── Sections ── */
+    section {
+      margin-bottom: 4.5rem;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      white-space: nowrap;
+    }
+
+    h2 {
+      font-family: var(--font-head);
+      font-size: 1.65rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .section-rule {
+      flex: 1;
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin-bottom: 0;
+    }
+
+    /* ── Office Hours ── */
+    .office-hours {
+      display: inline-grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.2rem 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      background: var(--cream);
+      padding: 1rem 1.4rem;
+      border-left: 3px solid var(--ink-faint);
+      margin-top: 0.5rem;
+    }
+
+    .oh-day { color: var(--ink-mid); font-weight: 400; }
+    .oh-time { color: var(--ink); }
+    .oh-none { color: var(--ink-faint); font-style: italic; }
+
+    /* ── Collaborators ── */
+    .collab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0;
+    }
+
+    .collab-item {
+      border-top: 1px solid var(--rule);
+      padding: 0.75rem 0.5rem 0.75rem 0;
+    }
+
+    .collab-item:nth-last-child(-n+3):not(:nth-child(3n+1)) ~ .collab-item,
+    .collab-item:last-child {
+      /* handled by grid gap */
+    }
+
+    .collab-grid .collab-item:last-child,
+    .collab-grid .collab-item:nth-last-child(-n+1) {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* simpler: just bottom-border the whole grid */
+    .collab-grid {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .collab-name {
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .collab-name a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink-faint);
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .collab-name a:hover {
+      color: var(--accent2);
+      border-color: var(--accent2);
+    }
+
+    .collab-papers {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--ink-soft);
+      margin-top: 0.2rem;
+    }
+
+    /* ── Publications ── */
+    .pub-filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .filter-btn {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: none;
+      border: 1px solid var(--rule);
+      color: var(--ink-soft);
+      padding: 0.35rem 0.8rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+
+    .pub-list { display: flex; flex-direction: column; gap: 0; }
+
+    .pub-item {
+      border-top: 1px solid var(--rule);
+      padding: 1.4rem 0;
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: 0 1.2rem;
+      align-items: start;
+    }
+
+    .pub-item:last-child { border-bottom: 1px solid var(--rule); }
+
+    .pub-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink-faint);
+      padding-top: 0.25rem;
+      text-align: right;
+    }
+
+    .pub-content {}
+
+    .pub-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.4;
+      margin-bottom: 0.3rem;
+    }
+
+    .pub-title a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink-faint);
+      transition: border-color 0.15s;
+    }
+
+    .pub-title a:hover { border-color: var(--accent); color: var(--accent); }
+
+    .pub-authors {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--ink-mid);
+      margin-bottom: 0.3rem;
+    }
+
+    .pub-meta {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--ink-soft);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .pub-status {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      border-radius: 2px;
+    }
+
+    .status-preprint { background: #f0e6c8; color: #7a5a10; }
+    .status-accepted { background: #d8ecd4; color: #2a5a20; }
+    .status-published { background: #d4e4f0; color: #1a3a5a; }
+    .status-dissertation { background: #ebe0f0; color: #4a2a6a; }
+
+
+    .pub-abstract {
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--ink-mid);
+      margin-top: 0.7rem;
+      padding: 0.9rem 1rem;
+      background: var(--cream);
+      border-left: 2px solid var(--ink-faint);
+    }
+
+    .pub-link a {
+      color: var(--accent2);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+    }
+    .pub-link a:hover { text-decoration: underline; }
+
+    /* ── Grants ── */
+    .grant-list { display: flex; flex-direction: column; gap: 0; }
+
+    .grant-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0 1.5rem;
+      padding: 1.1rem 0;
+      border-top: 1px solid var(--rule);
+      align-items: start;
+    }
+
+    .grant-item:last-child { border-bottom: 1px solid var(--rule); }
+
+    .grant-id {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--ink-soft);
+      white-space: nowrap;
+      padding-top: 0.2rem;
+    }
+
+    .grant-id a { color: inherit; text-decoration: none; }
+    .grant-id a:hover { color: var(--accent); }
+
+    .grant-desc { font-size: 0.95rem; color: var(--ink-mid); }
+    .grant-years {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink-faint);
+      margin-top: 0.1rem;
+    }
+
+    /* ── Teaching ── */
+    .teaching-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .term-block {
+      background: var(--cream);
+      padding: 1.4rem 1.6rem;
+      border-top: 3px solid var(--ink);
+    }
+
+    .term-label {
+      font-family: var(--font-head);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 0.7rem;
+    }
+
+    .course-item {
+      font-size: 0.95rem;
+      color: var(--ink-mid);
+      padding: 0.2rem 0;
+    }
+
+    /* ── Talks ── */
+    .talk-list { display: flex; flex-direction: column; gap: 0; }
+
+    .talk-item {
+      padding: 1rem 0;
+      border-top: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 5rem 1fr;
+      gap: 0 1.2rem;
+    }
+
+    .talk-item:last-child { border-bottom: 1px solid var(--rule); }
+
+    .talk-year {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--ink-faint);
+      padding-top: 0.2rem;
+    }
+
+    .talk-title {
+      font-size: 0.95rem;
+      color: var(--ink);
+      font-weight: 500;
+      margin-bottom: 0.15rem;
+    }
+
+    .talk-title a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--ink-faint); }
+    .talk-title a:hover { border-color: var(--accent); color: var(--accent); }
+
+    .talk-venue { font-size: 0.85rem; font-style: italic; color: var(--ink-soft); }
+
+    /* ── Seminar section ── */
+    .seminar-list { display: flex; flex-direction: column; gap: 1rem; }
+
+    .seminar-item {
+      padding: 1rem 1.2rem;
+      background: var(--cream);
+      border-left: 3px solid var(--accent2);
+    }
+
+    .seminar-name { font-weight: 500; font-size: 0.95rem; margin-bottom: 0.2rem; }
+    .seminar-name a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink-faint); }
+    .seminar-name a:hover { border-color: var(--accent2); }
+    .seminar-info { font-size: 0.85rem; color: var(--ink-soft); font-style: italic; }
+
+    /* ── Events ── */
+    .event-list { display: flex; flex-direction: column; gap: 1rem; }
+
+    .event-item { padding: 0.9rem 0; border-top: 1px solid var(--rule); }
+    .event-item:last-child { border-bottom: 1px solid var(--rule); }
+    .event-title { font-size: 0.97rem; font-weight: 500; margin-bottom: 0.2rem; }
+    .event-title a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink-faint); }
+    .event-title a:hover { border-color: var(--accent); color: var(--accent); }
+    .event-meta { font-size: 0.85rem; color: var(--ink-soft); font-style: italic; }
+
+    /* ── Students ── */
+    .student-item { padding: 0.8rem 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: baseline; }
+    .student-item:last-child { border-bottom: 1px solid var(--rule); }
+    .student-name { font-size: 0.97rem; }
+    .student-name a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink-faint); }
+    .student-name a:hover { border-color: var(--accent); color: var(--accent); }
+    .student-year { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-faint); }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--ink-faint);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* ── Utility ── */
+    p + p { margin-top: 0.8em; }
+
+    .text-body {
+      font-size: 1rem;
+      color: var(--ink-mid);
+      line-height: 1.75;
+    }
+
+    .mt-1 { margin-top: 1rem; }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    section:nth-child(1) { animation-delay: 0.05s; }
+    section:nth-child(2) { animation-delay: 0.1s; }
+    section:nth-child(3) { animation-delay: 0.15s; }
+    section:nth-child(4) { animation-delay: 0.2s; }
+    section:nth-child(5) { animation-delay: 0.25s; }
+
+    /* ── Mobile ── */
+    @media (max-width: 800px) {
+      .site-wrapper { flex-direction: column; }
+
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        gap: 1rem;
+        background: linear-gradient(90deg, var(--uconn-navy-mid) 0%, var(--uconn-navy) 100%);
+      }
+
+      .sidebar-rule,
+      .sidebar-contact,
+      .sidebar-dept,
+      .nav-label { display: none; }
+
+      .sidebar-title { display: none; }
+      .sidebar-name { margin-bottom: 0; }
+
+      .sidebar nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem 1rem;
+        flex: 1;
+      }
+
+      .sidebar nav a {
+        border-left: none;
+        padding-left: 0;
+        margin-left: 0;
+      }
+
+      .main {
+        padding: 2.5rem 1.5rem 4rem;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-photo {
+        display: none;
+      }
+
+      .hero-name { font-size: 2.2rem; }
+
+      .pub-item { grid-template-columns: 2rem 1fr; }
+      .talk-item { grid-template-columns: 1fr; }
+      .talk-year { font-size: 0.68rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-wrapper">
+    <main style="max-width:var(--max-w); margin:0 auto; padding:3rem 2.5rem;">
+
+      <div style="margin-bottom:2rem;">
+        <a href="index.html" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent2); text-decoration:none; letter-spacing:0.05em;">← Back to Matthew Badger's homepage</a>
+      </div>
+
+      <div class="section-header">
+        <h2>Publications &amp; Preprints</h2>
+        <hr class="section-rule" />
+      </div>
+
+      <div class="pub-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="preprint">Preprints</button>
+        <button class="filter-btn" data-filter="published">Published</button>
+        <button class="filter-btn" data-filter="accepted">Accepted</button>
+      </div>
+
+      <div class="pub-list">
+
+        <!-- #28 -->
+        <div class="pub-item" data-status="preprint">
+          <div class="pub-num">#28</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/tan c6.pdf">Tangents to Lipschitz and Sobolev images</a>
+            </div>
+            <div class="pub-authors">with Jared Krandel, Vyron Vellis</div>
+            <div class="pub-meta">
+              <span class="pub-status status-preprint">Preprint</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/2601.22473">arXiv:2601.22473</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We develop geometric versions of Rademacher and Calderón type differentiability theorems in two categories. A special case of our results is that for any Lipschitz or continuous
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>W</mi><mrow><mn>1</mn><mo>,</mo><mi>p</mi></mrow></msup></math>
+              Sobolev map
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi></math>
+              from
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mrow><mo>[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>]</mo></mrow><mi>n</mi></msup></math>
+              into a Euclidean space with
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi><mo>&gt;</mo><mi>n</mi></math>,
+              the image
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>(</mo><msup><mrow><mo>[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>]</mo></mrow><mi>n</mi></msup><mo>)</mo></math>
+              has a unique tangent set (Attouch-Wets convergence) at almost every point with respect to the
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>-dimensional
+              Hausdorff measure. In the analogous case when
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi></math>
+              is a continuous
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>N</mi><mrow><mn>1</mn><mo>,</mo><mi>p</mi></mrow></msup></math>
+              map from
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mrow><mo>[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>]</mo></mrow><mi>n</mi></msup></math>
+              into a metric space, we show that the image
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>(</mo><msup><mrow><mo>[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>]</mo></mrow><mi>n</mi></msup><mo>)</mo></math>
+              has a unique metric tangent (Gromov-Hausdorff convergence) almost everywhere. These results complement, but are distinct from, Federer's theorem on existence and uniqueness of approximate tangents of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>-rectifiable
+              sets in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>d</mi></msup></math>.
+            </div>
+          </div>
+        </div>
+
+        <!-- #27 -->
+        <div class="pub-item" data-status="accepted">
+          <div class="pub-num">#27</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/cal_nodal_domains_v10a.pdf">On the number of nodal domains of homogeneous caloric polynomials</a>
+            </div>
+            <div class="pub-authors">with Cole Jeznach</div>
+            <div class="pub-meta">
+              <span class="pub-status status-accepted">Accepted</span>
+              <span>Annales Henri Lebesgue</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/2401.07268">arXiv:2401.07268</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We investigate the minimum and maximum number of nodal domains across all time-dependent homogeneous caloric polynomials of degree
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>d</mi></math>
+              in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup><mo>×</mo><mi mathvariant="double-struck">R</mi></math>
+              (space × time), i.e., polynomial solutions of the heat equation satisfying
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mo>∂</mo><mi>t</mi></msub><mi>p</mi><mo>≢</mo><mn>0</mn></math>
+              and
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi><mo>(</mo><mi>λ</mi><mi>x</mi><mo>,</mo><msup><mi>λ</mi><mn>2</mn></msup><mi>t</mi><mo>)</mo><mo>=</mo><msup><mi>λ</mi><mi>d</mi></msup><mi>p</mi><mo>(</mo><mi>x</mi><mo>,</mo><mi>t</mi><mo>)</mo></math>
+              for all
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>,
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>t</mi><mo>∈</mo><mi mathvariant="double-struck">R</mi></math>,
+              and
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>λ</mi><mo>&gt;</mo><mn>0</mn></math>.
+              When
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>=</mo><mn>1</mn></math>,
+              the number of nodal domains is classically precisely
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⌈</mo><mi>d</mi><mo>/</mo><mn>2</mn><mo>⌉</mo></math>.
+              When
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>=</mo><mn>2</mn></math>,
+              we prove that the minimum number of nodal domains is
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math>
+              if
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>d</mi><mo>≢</mo><mn>0</mn><mspace width="0.2em"/><mo>(</mo><mi>mod</mi><mspace width="0.2em"/><mn>4</mn><mo>)</mo></math>
+              and is
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>
+              if
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>d</mi><mo>≡</mo><mn>0</mn><mspace width="0.2em"/><mo>(</mo><mi>mod</mi><mspace width="0.2em"/><mn>4</mn><mo>)</mo></math>.
+              When
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>≥</mo><mn>3</mn></math>,
+              we prove that the minimum number of nodal domains is
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math>
+              for all
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>d</mi></math>.
+              Finally, the maximum number of nodal domains is
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi mathvariant="normal">Θ</mi><mo>(</mo><msup><mi>d</mi><mi>n</mi></msup><mo>)</mo></math>
+              as
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>d</mi><mo>→</mo><mi>∞</mi></math>
+              and lies between
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mrow><mo>⌊</mo><mi>d</mi><mo>/</mo><mi>n</mi><mo>⌋</mo></mrow><mi>n</mi></msup></math>
+              and
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>(</mo><mfrac linethickness="0"><mrow><mi>n</mi><mo>+</mo><mi>d</mi></mrow><mi>n</mi></mfrac><mo>)</mo></mrow></math>
+              for all
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>
+              and
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>d</mi></math>.
+            </div>
+          </div>
+        </div>
+
+        <!-- #26 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#26</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/2d-gks e9 final.pdf">Square packings and rectifiable doubling measures</a>
+            </div>
+            <div class="pub-authors">with Raanan Schul</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Discrete Analysis 2025:3, 40 pp.</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/2309.01283">arXiv:2309.01283</a></span>
+              <span class="pub-link"><a href="https://discreteanalysisjournal.com/article/137798-square-packings-and-rectifiable-doubling-measures" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We prove that for all integers
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>≤</mo><mi>m</mi><mo>≤</mo><mi>d</mi><mo>−</mo><mn>1</mn></math>,
+              there exist doubling measures on
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>d</mi></msup></math>
+              with full support that are
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi></math>-rectifiable
+              and purely
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mi>m</mi><mo>−</mo><mn>1</mn><mo>)</mo></math>-unrectifiable
+              in the sense of Federer (i.e., without assuming
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi><mo>≪</mo><msup><mi mathvariant="script">H</mi><mi>m</mi></msup></math>).
+              Our construction is informed by a simple observation about square packing in the plane:
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>N</mi></math>
+              axis-parallel squares of side length
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>s</mi></math>
+              pack inside a square of side length
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>⌈</mo><msup><mi>N</mi><mrow><mn>1</mn><mo>/</mo><mn>2</mn></mrow></msup><mo>⌉</mo><mi>s</mi></math>.
+              One consequence is that for each
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi><mo>=</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>,</mo><mn>4</mn></math>
+              and
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>s</mi><mo>&lt;</mo><mi>∞</mi></math>,
+              there exist doubling measures
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi></math>
+              on the Heisenberg group
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">H</mi><mn>1</mn></msup></math>
+              and Lipschitz maps
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>:</mo><mi>E</mi><mo>⊂</mo><msup><mi mathvariant="double-struck">R</mi><mi>m</mi></msup><mo>→</mo><msup><mi mathvariant="double-struck">H</mi><mn>1</mn></msup></math>
+              such that
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi><mo>≪</mo><msup><mi mathvariant="script">H</mi><mi>s</mi></msup></math>,
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>(</mo><mi>E</mi><mo>)</mo></math>
+              has Hausdorff dimension
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>s</mi></math>,
+              and
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi><mo>(</mo><mi>f</mi><mo>(</mo><mi>E</mi><mo>)</mo><mo>)</mo><mo>&gt;</mo><mn>0</mn></math>.
+              This is striking because
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="script">H</mi><mi>m</mi></msup><mo>(</mo><mi>f</mi><mo>(</mo><mi>E</mi><mo>)</mo><mo>)</mo><mo>=</mo><mn>0</mn></math>
+              for every Lipschitz map
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>:</mo><mi>E</mi><mo>⊂</mo><msup><mi mathvariant="double-struck">R</mi><mi>m</mi></msup><mo>→</mo><msup><mi mathvariant="double-struck">H</mi><mn>1</mn></msup></math>
+              by a theorem of Ambrosio and Kirchheim (2000).
+            </div>
+          </div>
+        </div>
+
+        <!-- #25 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#25</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="https://www.ams.org/journals/notices/202307/noti2729/">A practical guide to writing an NSF grant proposal</a>
+            </div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Notices Amer. Math. Soc. 70 (2023), no. 7, 1089–1093</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- #24 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#24</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/non-uniquearXivVersion.pdf">Slowly vanishing mean oscillations: non-uniqueness of blow-ups in a two-phase free boundary problem</a>
+            </div>
+            <div class="pub-authors">with Max Engelstein, Tatiana Toro</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Vietnam J. Math. 52 (2024), 615–625</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/2210.17531">arXiv:2210.17531</a></span>
+            </div>
+            <div class="pub-abstract open">
+              In Kenig and Toro's two-phase free boundary problem, one studies how the regularity of the Radon-Nikodym derivative
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math>
+              of exterior harmonic measure with respect to interior harmonic measure on complementary NTA domains controls the geometry of their common boundary. It is now known that
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>log</mi><mo> </mo><mi>h</mi></math>
+              being Hölder continuous implies that pointwise the boundary has a unique blow-up, which is the zero set of a homogeneous harmonic polynomial. In this note, we give examples of domains with
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>log</mi><mo> </mo><mi>h</mi></math>
+              being continuous whose boundaries have points with non-unique blow-ups. The examples arise from oscillating or rotating a blow-up limit by an infinite amount, but very slowly.
+            </div>
+          </div>
+        </div>
+
+        <!-- #23 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#23</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/part2 f6.pdf">Subsets of rectifiable curves in Banach spaces II: universal estimates for almost flat arcs</a>
+            </div>
+            <div class="pub-authors">with Sean McCurdy</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Illinois J. Math. 67 (2023), no. 2, 275–331</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/2208.10288">arXiv:2208.10288</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We prove that in any Banach space the set of windows in which a rectifiable curve resembles two or more straight line segments is quantitatively small with constants that are independent of the curve, the dimension of the space, and the choice of norm. Together with Part I, this completes the proof of the necessary half of the Analyst's Traveling Salesman theorem with sharp exponent in uniformly convex spaces.
+            </div>
+          </div>
+        </div>
+
+        <!-- #22 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#22</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/refine-bourgain c4.pdf">Lower bounds on Bourgain's constant for harmonic measure</a>
+            </div>
+            <div class="pub-authors">with Alyssa Genschaw</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Canad. J. Math. 76 (2024), no. 6, 1967–1986</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/2205.15101">arXiv:2205.15101</a></span>
+            </div>
+            <div class="pub-abstract open">
+              For every
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>≥</mo><mn>2</mn></math>,
+              Bourgain's constant
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>b</mi><mi>n</mi></msub></math>
+              is the largest number such that the upper Hausdorff dimension of harmonic measure is at most
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>−</mo><msub><mi>b</mi><mi>n</mi></msub></math>
+              for every domain in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>
+              on which harmonic measure is defined. Jones and Wolff (1988) proved that
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>b</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn></math>.
+              When
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>≥</mo><mn>3</mn></math>,
+              Bourgain (1987) proved that
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>b</mi><mi>n</mi></msub><mo>&gt;</mo><mn>0</mn></math>
+              and Wolff (1995) produced examples showing
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>b</mi><mi>n</mi></msub><mo>&lt;</mo><mn>1</mn></math>.
+              Refining Bourgain's original outline, we prove that
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>b</mi><mi>n</mi></msub><mo>≥</mo><msup><mi>c</mi><mo>*</mo></msup><msup><mi>n</mi><mrow><mo>−</mo><mn>2</mn><mi>n</mi><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>/</mo><mi>ln</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow></msup></math>
+              for all
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>≥</mo><mn>3</mn></math>,
+              where
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>c</mi><mo>&gt;</mo><mn>0</mn></math>
+              is a constant independent of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>.
+              We further estimate
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>b</mi><mn>3</mn></msub><mo>≥</mo><mn>1</mn><mo>×</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>15</mn></mrow></msup></math>
+              and
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>b</mi><mn>4</mn></msub><mo>≥</mo><mn>2</mn><mo>×</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>26</mn></mrow></msup></math>.
+            </div>
+          </div>
+        </div>
+
+        <!-- #21 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#21</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/blz arxiv 4c.pdf">Identifying 1-rectifiable measures in Carnot groups</a>
+            </div>
+            <div class="pub-authors">with Sean Li, Scott Zimmerman</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Anal. Geom. Metr. Spaces 11 (2023), Paper no. 20230102</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/2109.06753">arXiv:2109.06753</a></span>
+              <span class="pub-link"><a href="https://www.degruyter.com/document/doi/10.1515/agms-2023-0102/html" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We continue to develop a program in geometric measure theory that seeks to identify how measures in a space interact with canonical families of sets in the space. Extending a theorem of the first author and R. Schul in Euclidean space, for an arbitrary locally finite Borel measure in an arbitrary Carnot group, we develop tests that identify the part of the measure that is carried by rectifiable curves and the part that is singular to rectifiable curves. Our main result is entwined with an extension of the Analyst's Traveling Salesman Theorem, which characterizes subsets of rectifiable curves in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mn>2</mn></msup></math>
+              (P. Jones, 1990), in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>
+              (K. Okikiolu, 1992), or in an arbitrary Carnot group (the second author) in terms of local geometric least squares data called Jones'
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>β</mi></math>-numbers.
+              In a secondary result, we implement the Garnett-Killip-Schul construction of a doubling measure in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>
+              that charges a rectifiable curve in an arbitrary complete, quasiconvex, doubling metric space.
+            </div>
+          </div>
+        </div>
+
+        <!-- #20 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#20</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/cdim d7 final.pdf">Hausdorff dimension of caloric measure</a>
+            </div>
+            <div class="pub-authors">with Alyssa Genschaw</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Amer. J. Math. 147 (2025), no. 2, 465–502</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/2108.12340">arXiv:2108.12340</a></span>
+              <span class="pub-link"><a href="https://muse.jhu.edu/pub/1/article/954648/summary" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We examine caloric measures on general domains in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msup><mo>=</mo><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup><mo>×</mo><mi mathvariant="double-struck">R</mi></math>
+              (space × time) from the perspective of geometric measure theory. We give a direct proof that the lower parabolic Hausdorff dimension of caloric measure is at least
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>
+              and is absolutely continuous with respect to the
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>-dimensional
+              parabolic Hausdorff measure. We also prove that the upper parabolic Hausdorff dimension of caloric measure is at most
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>+</mo><mn>2</mn><mo>−</mo><msub><mi>β</mi><mi>n</mi></msub></math>,
+              where
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>β</mi><mi>n</mi></msub><mo>&gt;</mo><mn>0</mn></math>
+              depends only on
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>.
+              Analogous bounds for harmonic measures were first shown by Nevanlinna (1934) and Bourgain (1987). In the course of the proof, we give a caloric measure analogue of Bourgain's alternative involving cubes
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Q</mi></math>,
+              subcubes
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>F</mi></math>
+              and
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>Q</mi><mo>*</mo></msup></math>,
+              and closed sets
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>E</mi><mo>⊂</mo><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>:
+              either the part of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>E</mi></math>
+              in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Q</mi></math>
+              has relatively large caloric measure in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Q</mi><mo>∖</mo><mi>E</mi></math>,
+              or the part of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>E</mi></math>
+              in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>Q</mi><mo>*</mo></msup></math>
+              has relatively small
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>ρ</mi></math>-dimensional
+              parabolic Hausdorff content for every
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>&lt;</mo><mi>ρ</mi><mo>≤</mo><mi>n</mi><mo>+</mo><mn>2</mn></math>.
+            </div>
+          </div>
+        </div>
+
+        <!-- #19 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#19</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/radon-graphs b5.pdf">Radon measures and Lipschitz graphs</a>
+            </div>
+            <div class="pub-authors">with Lisa Naples</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Bull. London Math. Soc. 53 (2021), no. 3, 921–936</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/2007.08503">arXiv:2007.08503</a></span>
+              <span class="pub-link"><a href="https://londmathsoc.onlinelibrary.wiley.com/doi/10.1112/blms.12473" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              For all
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>≤</mo><mi>m</mi><mo>≤</mo><mi>n</mi><mo>−</mo><mn>1</mn></math>,
+              we investigate the interaction of locally finite measures in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>
+              with the family of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi></math>-dimensional
+              Lipschitz graphs. We characterize Radon measures
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi></math>
+              that are carried by Lipschitz graphs in the sense that there exist graphs
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>Γ</mi><mn>1</mn></msub><mo>,</mo><msub><mi>Γ</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo></math>
+              such that
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi><mo>(</mo><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup><mo>∖</mo><mo>⋃</mo><msub><mi>Γ</mi><mi>i</mi></msub><mo>)</mo><mo>=</mo><mn>0</mn></math>,
+              using only countably many evaluations of the measure. This problem was classically studied within smaller classes of measures, e.g., for the restrictions of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi></math>-dimensional
+              Hausdorff measure
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="script">H</mi><mi>m</mi></msup></math>
+              to sets
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>E</mi></math>
+              with
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>&lt;</mo><msup><mi mathvariant="script">H</mi><mi>m</mi></msup><mo>(</mo><mi>E</mi><mo>)</mo><mo>&lt;</mo><mi>∞</mi></math>.
+              To develop a characterization for arbitrary Radon measures, we look at the behavior of coarse doubling ratios of the measure on dyadic cubes intersecting conical annuli.
+            </div>
+          </div>
+        </div>
+
+        <!-- #18 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#18</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/btsp part1 a8.pdf">Subsets of rectifiable curves in Banach spaces I: sharp exponents in traveling salesman theorems</a>
+            </div>
+            <div class="pub-authors">with Sean McCurdy</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Illinois J. Math. 67 (2023), no. 2, 203–274</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/2002.11878">arXiv:2002.11878</a></span>
+              <span class="pub-link"><a href="https://doi.org/10.1215/00192082-10592363" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              The Analyst's Traveling Salesman Problem is to find a characterization of subsets of rectifiable curves in a metric space. This problem was introduced and solved in the plane by Jones (1990) and subsequently solved in higher-dimensional Euclidean spaces by Okikiolu (1992) and in the infinite-dimensional Hilbert space
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>ℓ</mi><mn>2</mn></msup></math>
+              by Schul (2007). We establish sharp extensions of Schul's necessary and sufficient conditions for a bounded set
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>E</mi><mo>⊂</mo><msup><mi>ℓ</mi><mi>p</mi></msup></math>
+              to be contained in a rectifiable curve from
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi><mo>=</mo><mn>2</mn></math>
+              to
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>&lt;</mo><mi>p</mi><mo>&lt;</mo><mi>∞</mi></math>.
+              While the necessary and sufficient conditions coincide when
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi><mo>=</mo><mn>2</mn></math>,
+              we demonstrate that there is a strict gap between the necessary condition and sufficient condition when
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi><mo>≠</mo><mn>2</mn></math>.
+              We also identify and correct technical errors in the proof by Schul.
+            </div>
+          </div>
+        </div>
+
+        <!-- #17 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#17</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/IFS f3 arxiv.pdf">Hölder parameterization of iterated function systems and a self-affine phenomenon</a>
+            </div>
+            <div class="pub-authors">with Vyron Vellis</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Anal. Geom. Metr. Spaces 9 (2021), no. 1, 90–119</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1910.08850">arXiv:1910.08850</a></span>
+              <span class="pub-link"><a href="https://www.degruyter.com/document/doi/10.1515/agms-2020-0125/html" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We investigate the Hölder geometry of curves generated by iterated function systems (IFS) in a complete metric space. We prove that every connected attractor of an IFS is
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>/</mo><mi>s</mi></math>-Hölder
+              path-connected, where
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>s</mi></math>
+              is the similarity dimension of the IFS, and is parameterized by a
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>/</mo><mi>a</mi></math>-Hölder
+              curve for all
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi><mo>&gt;</mo><mi>s</mi></math>.
+              At the endpoint
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi><mo>=</mo><mi>s</mi></math>,
+              a theorem of Remes (1998) established that connected self-similar sets in Euclidean space satisfying the open set condition are parameterized by
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>/</mo><mi>s</mi></math>-Hölder
+              curves. An interesting phenomenon emerges in the self-affine setting: while the optimal parameter
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>s</mi></math>
+              for a self-similar curve in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>
+              is at most
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>,
+              the optimal parameter for a self-affine curve in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>
+              may be strictly greater than
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>.
+            </div>
+          </div>
+        </div>
+
+        <!-- #16 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#16</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/sreg-p2 final.pdf">Regularity of the singular set in a two-phase problem for harmonic measure with Hölder data</a>
+            </div>
+            <div class="pub-authors">with Max Engelstein, Tatiana Toro</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Rev. Mat. Iberoam. 36 (2020), no. 5, 1375–1408</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1807.08002">arXiv:1807.08002</a></span>
+              <span class="pub-link"><a href="https://www.ems-ph.org/journals/of_article.php?jrn=rmi&doi=1170" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              In non-variational two-phase free boundary problems for harmonic measure, we examine how the relationship between the interior and exterior harmonic measures of a domain in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>-dimensional
+              Euclidean space influences the geometry of its boundary. The focus is on the singular set in the free boundary, where the boundary looks infinitesimally like zero sets of homogeneous harmonic polynomials of degree at least 2. We prove that if the Radon-Nikodym derivative of the exterior harmonic measure with respect to the interior harmonic measure has a Hölder continuous logarithm, then the free boundary admits unique geometric blowups at every singular point and the singular set can be covered by countably many
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>C</mi><mrow><mn>1</mn><mo>,</mo><mi>β</mi></mrow></msup></math>
+              submanifolds of dimension at most
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>−</mo><mn>3</mn></math>.
+              This is obtained in part by adapting Garofalo and Petrosyan's Weiss type monotonicity formula and an epiperimetric inequality from the variational to the non-variational setting.
+            </div>
+          </div>
+        </div>
+
+        <!-- #15 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#15</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/TSP d7.pdf">Hölder curves and parameterizations in the Analyst's Traveling Salesman theorem</a>
+            </div>
+            <div class="pub-authors">with Lisa Naples, Vyron Vellis</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Adv. Math. 349 (2019), 564–647</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1806.01197">arXiv:1806.01197</a></span>
+              <span class="pub-link"><a href="https://www.sciencedirect.com/science/article/pii/S0001870819301720?via%3Dihub" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We investigate the geometry of sets in Euclidean and infinite-dimensional Hilbert spaces. We establish sufficient conditions that ensure a set of points is contained in the image of a
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mn>1</mn><mo>/</mo><mi>s</mi><mo>)</mo></math>-Hölder
+              continuous map
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>:</mo><mo>[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>]</mo><mo>→</mo><msup><mi>ℓ</mi><mn>2</mn></msup></math>,
+              with
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>s</mi><mo>&gt;</mo><mn>1</mn></math>.
+              Our results generalize the "sufficient half" of the Analyst's Traveling Salesman Theorem, which characterizes subsets of rectifiable curves in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>N</mi></msup></math>
+              or
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>ℓ</mi><mn>2</mn></msup></math>
+              in terms of a quadratic sum of linear approximation numbers called Jones'
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>β</mi></math>-numbers.
+              We show how to construct parameterizations of intermediate approximating curves
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>f</mi><mi>k</mi></msub><mo>(</mo><mo>[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>]</mo><mo>)</mo></math>
+              and find conditions in terms of tube approximations ensuring the approximating curves converge to a Hölder curve. As an application, we provide sufficient conditions to guarantee fractional rectifiability of pointwise doubling measures in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>N</mi></msup></math>.
+            </div>
+          </div>
+        </div>
+
+        <!-- #14 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#14</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/ident c6.pdf">Generalized rectifiability of measures and the identification problem</a>
+            </div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Complex Anal. Synerg. 5 (2019), 2</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1803.10022">arXiv:1803.10022</a></span>
+              <span class="pub-link"><a href="https://link.springer.com/article/10.1007%2Fs40627-019-0027-3" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              One goal of geometric measure theory is to understand how measures in the plane or higher dimensional Euclidean space interact with families of lower dimensional sets. An important dichotomy arises between the class of rectifiable measures, which give full measure to a countable union of the lower dimensional sets, and the class of purely unrectifiable measures, which assign measure zero to each distinguished set. In this paper, we describe a framework for generalized rectifiability, review classical results on rectifiable measures in this context, and survey recent advances on the identification problem for Radon measures that are carried by Lipschitz, Hölder, or
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>C</mi><mrow><mn>1</mn><mo>,</mo><mi>α</mi></mrow></msup></math>
+              images of Euclidean subspaces, including theorems of Azzam-Tolsa, Badger-Schul, Badger-Vellis, Edelen-Naber-Valtorta, Ghinassi, and Tolsa-Toro.
+            </div>
+          </div>
+        </div>
+
+        <!-- #13 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#13</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/gmph27.pdf">Geometry of measures in real dimensions via Hölder parameterizations</a>
+            </div>
+            <div class="pub-authors">with Vyron Vellis</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>J. Geom. Anal. 29 (2019), no. 2, 1153–1192</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1706.07846">arXiv:1706.07846</a></span>
+              <span class="pub-link"><a href="https://link.springer.com/article/10.1007/s12220-018-0034-2" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We investigate the influence that
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>s</mi></math>-dimensional
+              lower and upper Hausdorff densities have on the geometry of a Radon measure in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>
+              when
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>s</mi></math>
+              is a real number between
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn></math>
+              and
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>.
+              When
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>&lt;</mo><mi>s</mi><mo>&lt;</mo><mn>1</mn></math>,
+              we prove that measures with almost everywhere positive lower density and finite upper density are carried by countably many bi-Lipschitz curves. When
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>≤</mo><mi>s</mi><mo>&lt;</mo><mi>n</mi></math>,
+              we identify conditions on the lower density that ensure the measure is either carried by or singular to
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mn>1</mn><mo>/</mo><mi>s</mi><mo>)</mo></math>-Hölder
+              curves. We also introduce Hölder and bi-Lipschitz parameterization theorems for Euclidean sets with "small" Assouad dimension.
+            </div>
+          </div>
+        </div>
+
+        <!-- #12 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#12</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/1rect-s v19.pdf">Multiscale analysis of 1-rectifiable measures II: characterizations</a>
+            </div>
+            <div class="pub-authors">with Raanan Schul</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Anal. Geom. Metr. Spaces 5 (2017), no. 1, 1–39</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1602.03823">arXiv:1602.03823</a></span>
+              <span class="pub-link"><a href="https://www.degruyter.com/view/j/agms.2017.5.issue-1/agms-2017-0001/agms-2017-0001.xml" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              A measure is 1-rectifiable if there is a countable union of finite length curves whose complement has zero measure. We characterize 1-rectifiable Radon measures in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>-dimensional
+              Euclidean space for all
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>≥</mo><mn>2</mn></math>
+              in terms of positivity of the lower density and finiteness of a geometric square function, which records in an
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>L</mi><mn>2</mn></msup></math>
+              gauge the extent to which the measure admits approximate tangent lines along its support. In contrast with the classical theorems of Besicovitch, Morse and Randolph, and Moore, we do not assume an a priori relationship between the measure and
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn></math>-dimensional
+              Hausdorff measure. We also characterize purely 1-unrectifiable Radon measures, i.e., locally finite measures that give measure zero to every finite length curve. Along the way, we develop an
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>L</mi><mn>2</mn></msup></math>
+              variant of Jones' traveling salesman construction.
+            </div>
+          </div>
+        </div>
+
+        <!-- #11 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#11</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/hsing16.pdf">Structure of sets which are well approximated by zero sets of harmonic polynomials</a>
+            </div>
+            <div class="pub-authors">with Max Engelstein, Tatiana Toro</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Anal. PDE 10 (2017), no. 6, 1455–1495</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1509.03211">arXiv:1509.03211</a></span>
+              <span class="pub-link"><a href="http://msp.org/apde/2017/10-6/p06.xhtml" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              The zero sets of harmonic polynomials play a crucial role in the study of the free boundary regularity problem for harmonic measure. We study how "degree
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi></math>
+              points" sit inside zero sets of harmonic polynomials in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>
+              of degree
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>d</mi></math>
+              (for all
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>≥</mo><mn>2</mn></math>
+              and
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>≤</mo><mi>k</mi><mo>≤</mo><mi>d</mi></math>)
+              and inside sets admitting arbitrarily good local approximations by such zero sets. We obtain a general structure theorem including sharp Hausdorff and Minkowski dimension estimates on the singular set of "degree
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi></math>
+              points" (
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi><mo>≥</mo><mn>2</mn></math>)
+              without proving uniqueness of blowups or using PDE methods such as monotonicity formulae. In the presence of a topological separation condition, the sharp dimension estimates improve and depend on the parity of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>k</mi></math>.
+              An application is given to the two-phase free boundary regularity problem for harmonic measure below the continuous threshold introduced by Kenig and Toro.
+            </div>
+          </div>
+        </div>
+
+        <!-- #10 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#10</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/ABHM_final.pdf">Rectifiability and elliptic measures on 1-sided NTA domains with Ahlfors-David regular boundaries</a>
+            </div>
+            <div class="pub-authors">with Murat Akman, Steve Hofmann, José María Martell</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Trans. Amer. Math. Soc. 369 (2017), no. 8, 5711–5745</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1507.02039">arXiv:1507.02039</a></span>
+              <span class="pub-link"><a href="http://www.ams.org/journals/tran/0000-000-00/S0002-9947-2017-06927-0/" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              Consider a 1-sided NTA domain (a uniform domain) in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msup></math>,
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>≥</mo><mn>2</mn></math>,
+              whose boundary is
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>-dimensional
+              Ahlfors-David regular. We characterize the rectifiability of the boundary in terms of absolute continuity of surface measure with respect to harmonic measure. We show these are equivalent to: the boundary being covered
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="script">H</mi><mi>n</mi></msup></math>-a.e.
+              by boundaries of bounded chord-arc subdomains, and to the boundary possessing exterior corkscrew points in a qualitative sense
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="script">H</mi><mi>n</mi></msup></math>-a.e.
+              Our methods apply to harmonic measure and also to elliptic measures associated with real symmetric second order divergence form elliptic operators with locally Lipschitz coefficients whose derivatives satisfy a natural Carleson condition.
+            </div>
+          </div>
+        </div>
+
+        <!-- #9 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#9</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/sufficient-13.pdf">Two sufficient conditions for rectifiable measures</a>
+            </div>
+            <div class="pub-authors">with Raanan Schul</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Proc. Amer. Math. Soc. 144 (2016), 2445–2454</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1412.8357">arXiv:1412.8357</a></span>
+              <span class="pub-link"><a href="http://www.ams.org/journals/proc/0000-000-00/S0002-9939-2015-12881-X/" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We identify two sufficient conditions for locally finite Borel measures on
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>
+              to give full mass to a countable family of Lipschitz maps of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>m</mi></msup></math>.
+              The first condition, extending a prior result of Pajot, is a sufficient test in terms of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>L</mi><mi>p</mi></msup></math>
+              affine approximability for a locally finite Borel measure
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi></math>
+              satisfying
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mo>lim sup</mo><mrow><mi>r</mi><mo>↓</mo><mn>0</mn></mrow></msub><mi>μ</mi><mo>(</mo><mi>B</mi><mo>(</mo><mi>x</mi><mo>,</mo><mi>r</mi><mo>)</mo><mo>)</mo><mo>/</mo><msup><mi>r</mi><mi>m</mi></msup><mo>&lt;</mo><mi>∞</mi></math>
+              at
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi></math>-almost
+              every
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math>
+              to be
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>m</mi></math>-rectifiable.
+              The second condition is an assumption on the growth rate of the 1-density that ensures a locally finite Borel measure
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi></math>
+              with
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mo>lim</mo><mrow><mi>r</mi><mo>↓</mo><mn>0</mn></mrow></msub><mi>μ</mi><mo>(</mo><mi>B</mi><mo>(</mo><mi>x</mi><mo>,</mo><mi>r</mi><mo>)</mo><mo>)</mo><mo>/</mo><mi>r</mi><mo>=</mo><mi>∞</mi></math>
+              at
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi></math>-almost
+              every
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math>
+              is 1-rectifiable.
+            </div>
+          </div>
+        </div>
+
+        <!-- #8 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#8</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/lsa-fms.pdf">Local set approximation: Mattila-Vuorinen type sets, Reifenberg type sets, and tangent sets</a>
+            </div>
+            <div class="pub-authors">with Stephen Lewis</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Forum Math. Sigma 3 (2015), e24, 63 pp.</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1409.7851">arXiv:1409.7851</a></span>
+              <span class="pub-link"><a href="http://journals.cambridge.org/action/displayAbstract?fromPage=online&aid=10026043&fulltextType=RA&fileId=S2050509415000262" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We investigate the interplay between the local and asymptotic geometry of a set
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi></math>
+              in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>
+              and the geometry of model sets that approximate
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi></math>
+              locally uniformly on small scales. The framework for local set approximation developed here unifies and extends ideas of Jones, Mattila-Vuorinen, Reifenberg, and Preiss. We indicate several applications to variational problems in geometric measure theory and PDE. For instance, we show that the singular part of the support of an
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo>)</mo></math>-dimensional
+              asymptotically optimally doubling measure in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>
+              (<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>≥</mo><mn>4</mn></math>)
+              has upper Minkowski dimension at most
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>−</mo><mn>4</mn></math>.
+            </div>
+          </div>
+        </div>
+
+        <!-- #7 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#7</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/2014-abt v8.pdf">Quasiconformal planes with bi-Lipschitz pieces and extensions of almost affine maps</a>
+            </div>
+            <div class="pub-authors">with Jonas Azzam, Tatiana Toro</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Adv. Math. 275 (2015), 195–259</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1403.2991">arXiv:1403.2991</a></span>
+              <span class="pub-link"><a href="http://www.sciencedirect.com/science/article/pii/S0001870815000547" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              A quasiplane is the image of an
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>-dimensional
+              Euclidean subspace of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>N</mi></msup></math>
+              (<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mi>N</mi><mo>−</mo><mn>1</mn></math>)
+              under a quasiconformal map of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>N</mi></msup></math>.
+              We give sufficient conditions in terms of the weak quasisymmetry constant of the underlying map for a quasiplane to be a bi-Lipschitz
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi></math>-manifold
+              and for a quasiplane to have big pieces of bi-Lipschitz images of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>.
+              One main novelty is the analysis of quasiplanes in arbitrary codimension
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>N</mi><mo>−</mo><mi>n</mi></math>.
+              To establish the big pieces criterion, we prove new extension theorems for "almost affine" maps. This work is related to investigations by Tukia and Väisälä on extensions of quasisymmetric maps with small distortion.
+            </div>
+          </div>
+        </div>
+
+        <!-- #6 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#6</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/1rect-n V20.pdf">Multiscale analysis of 1-rectifiable measures: necessary conditions</a>
+            </div>
+            <div class="pub-authors">with Raanan Schul</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Math. Ann. 361 (2015), no. 3–4, 1055–1072</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1307.0804">arXiv:1307.0804</a></span>
+              <span class="pub-link"><a href="http://link.springer.com/article/10.1007/s00208-014-1104-9" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We repurpose tools from the theory of quantitative rectifiability to study the qualitative rectifiability of measures in
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></math>,
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>&gt;</mo><mn>2</mn></math>.
+              To each locally finite Borel measure
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi></math>,
+              we associate a function
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>t</mi><msub><mi>J</mi><mn>2</mn></msub><mo>(</mo><mi>μ</mi><mo>,</mo><mi>x</mi><mo>)</mo></math>
+              which uses a weighted sum to record how closely the mass of
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi></math>
+              is concentrated on a line in the triples of dyadic cubes containing
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math>.
+              We show that
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>t</mi><msub><mi>J</mi><mn>2</mn></msub><mo>(</mo><mi>μ</mi><mo>,</mo><mi>x</mi><mo>)</mo><mo>&lt;</mo><mi>∞</mi></math>
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi></math>-a.e.
+              is a necessary condition for
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>μ</mi></math>
+              to give full mass to a countable family of rectifiable curves. This confirms a conjecture of Peter Jones from 2000. No assumption is made on the upper Hausdorff density of the measure, allowing analysis of generic 1-rectifiable measures that are mutually singular with
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi mathvariant="script">H</mi><mn>1</mn></msup></math>.
+            </div>
+          </div>
+        </div>
+
+        <!-- #5 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#5</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/extb4.pdf">Beurling's criterion and extremal metrics for Fuglede modulus</a>
+            </div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Ann. Acad. Sci. Fenn. Math. 38 (2013), 677–689</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1207.5277">arXiv:1207.5277</a></span>
+              <span class="pub-link"><a href="http://www.acadsci.fi/mathematica/Vol38/Badger.html" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              For each
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>≤</mo><mi>p</mi><mo>&lt;</mo><mi>∞</mi></math>,
+              we formulate a necessary and sufficient condition for an admissible metric to be extremal for the Fuglede
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math>-modulus
+              of a system of measures. When
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi><mo>=</mo><mn>2</mn></math>,
+              this characterization generalizes Beurling's criterion, a sufficient condition for an admissible metric to be extremal for the extremal length of a planar curve family. In addition, we prove that every non-negative Borel function in Euclidean space with positive and finite
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math>-norm
+              is extremal for the
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math>-modulus
+              of some curve family.
+            </div>
+          </div>
+        </div>
+
+        <!-- #4 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#4</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/qs-rect-a4.pdf">Quasisymmetry and rectifiability of quasispheres</a>
+            </div>
+            <div class="pub-authors">with James T. Gill, Steffen Rohde, Tatiana Toro</div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Trans. Amer. Math. Soc. 366 (2014), no. 3, 1413–1431</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1201.1581">arXiv:1201.1581</a></span>
+              <span class="pub-link"><a href="http://www.ams.org/journals/tran/0000-000-00/S0002-9947-2013-05926-0/" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We obtain Dini conditions with "exponent 2" that guarantee that an asymptotically conformal quasisphere is rectifiable. We also establish estimates for the weak quasisymmetry constant of a global
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>K</mi></math>-quasiconformal
+              map in neighborhoods where the maximal dilatation is close to 1.
+            </div>
+          </div>
+        </div>
+
+        <!-- #3 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#3</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/hflat2.pdf">Flat points in zero sets of harmonic polynomials and harmonic measure from two sides</a>
+            </div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>J. London Math. Soc. 87 (2013), no. 1, 111–137</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1109.1427">arXiv:1109.1427</a></span>
+              <span class="pub-link"><a href="http://jlms.oxfordjournals.org/content/87/1/111" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We obtain quantitative estimates of local flatness of zero sets of harmonic polynomials. There are two alternatives: at every point either the zero set stays uniformly far from a hyperplane in the Hausdorff distance at all scales, or the zero set becomes locally flat on small scales with arbitrarily small constant. An application is given to a free boundary problem for harmonic measure from two sides, where blow-ups of the boundary are zero sets of harmonic polynomials.
+            </div>
+          </div>
+        </div>
+
+        <!-- #2 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#2</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/hsurf5.pdf">Null sets of harmonic measure on NTA domains: Lipschitz approximation revisited</a>
+            </div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Math. Z. 270 (2012), no. 1–2, 241–262</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/1003.4547">arXiv:1003.4547</a></span>
+              <span class="pub-link"><a href="http://dx.doi.org/10.1007/s00209-010-0795-1" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We show the David-Jerison construction of big pieces of Lipschitz graphs inside a corkscrew domain does not require its surface measure to be upper Ahlfors regular. Thus we can study absolute continuity of harmonic measure and surface measure on NTA domains of locally finite perimeter using Lipschitz approximations. A partial analogue of the F. and M. Riesz Theorem for simply connected planar domains is obtained for NTA domains in space. As a consequence, every Wolff snowflake has infinite surface measure.
+            </div>
+          </div>
+        </div>
+
+        <!-- #1 -->
+        <div class="pub-item" data-status="published">
+          <div class="pub-num">#1</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/hpoly20091014.pdf">Harmonic polynomials and tangent measures of harmonic measure</a>
+            </div>
+            <div class="pub-meta">
+              <span class="pub-status status-published">Published</span>
+              <span>Rev. Mat. Iberoam. 27 (2011), no. 3, 841–870</span>
+              <span class="pub-link"><a href="https://arxiv.org/abs/0910.2591">arXiv:0910.2591</a></span>
+              <span class="pub-link"><a href="http://projecteuclid.org/euclid.rmi/1312906779" target="_blank" rel="noopener">Published version</a></span>
+            </div>
+            <div class="pub-abstract open">
+              We show that on an NTA domain, if each tangent measure to harmonic measure at a point is a polynomial harmonic measure, then the associated polynomials are homogeneous. More precisely, if
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>ω</mi></math>
+              is harmonic measure on an NTA domain
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Ω</mi></math>
+              and at a point
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>q</mi><mo>∈</mo><mo>∂</mo><mi>Ω</mi></math>
+              every tangent measure to
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>ω</mi></math>
+              is of the form
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mrow><mo>|</mo><mi>p</mi><mo>|</mo></mrow><mn>2</mn></msup><msup><mi mathvariant="script">H</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup><mrow><mo>⌊</mo><msup><mrow><mi>p</mi></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>(</mo><mn>0</mn><mo>)</mo><mo>⌋</mo></mrow></math>
+              for some harmonic polynomial
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math>,
+              then
+              <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math>
+              must be homogeneous. Geometric information for solutions of a two-phase free boundary problem studied by Kenig and Toro is derived.
+            </div>
+          </div>
+        </div>
+
+        <!-- #0 -->
+        <div class="pub-item" data-status="dissertation">
+          <div class="pub-num">#0</div>
+          <div class="pub-content">
+            <div class="pub-title">
+              <a href="paper/thesis-badger.pdf">Harmonic Polynomials and Free Boundary Regularity for Harmonic Measure from Two Sides</a>
+            </div>
+            <div class="pub-meta">
+              <span class="pub-status status-dissertation">Dissertation</span>
+              <span>Ph.D. Thesis — defended May 5, 2011</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p style="margin-top:1.5rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-soft);">
+        <a href="http://scholar.google.com/citations?user=8KBu_yoAAAAJ" style="color:var(--accent2);">View citation statistics on Google Scholar →</a>
+      </p>
+
+    </main>
+  </div>
+
+  <script>
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.pub-item').forEach(item => {
+        item.style.display = (filter === 'all' || item.dataset.status === filter) ? '' : 'none';
+      });
+    });
+  });
+  </script>
+</body>
+</html>
