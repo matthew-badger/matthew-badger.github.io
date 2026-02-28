@@ -721,10 +721,54 @@
 </head>
 <body>
   <div class="site-wrapper">
-    <main style="max-width:var(--max-w); margin:0 auto; padding:3rem 2.5rem;">
+    <aside class="sidebar">
+    <div class="sidebar-name">Matthew Badger</div>
+    <div class="sidebar-title">Professor of Mathematics<br>University of Connecticut</div>
+    <hr class="sidebar-rule" />
+
+    <nav>
+      <div class="nav-label">About</div>
+      <a href="index.html#about">Research Overview</a>
+
+      <div class="nav-label">Teaching</div>
+      <a href="index.html#teaching">Current Courses</a>
+      <a href="index.html#students">Ph.D. Students</a>
+
+      <div class="nav-label">Research</div>
+      <a href="index.html#collaborators">Collaborators</a>
+      <a href="index.html#publications">Publications</a>
+      <a href="pubs.html">Full Publication List</a>
+      <a href="index.html#grants">Grants & Fellowships</a>
+      <a href="index.html#talks">Selected Talks</a>
+
+      <div class="nav-label">Community</div>
+      <a href="index.html#seminars">Seminars at UConn</a>
+      <a href="index.html#events">Events</a>
+      <a href="index.html#miscellaneous">Miscellaneous</a>
+    </nav>
+
+    <div class="sidebar-dept">
+      <div class="sidebar-dept-label">Affiliated with</div>
+      <a href="https://www.math.uconn.edu" target="_blank" rel="noopener">
+        UConn Department<br>of Mathematics
+      </a>
+    </div>
+
+    <div class="sidebar-contact">
+      <div>Monteith 326</div>
+      <div>341 Mansfield Road, U-1009</div>
+      <div>Storrs, CT 06269-1009</div>
+      <div style="margin-top:0.6rem;">
+        <a href="/cdn-cgi/l/email-protection#caa7abbebea2afbde4a8abaeadafb88abfa9a5a4a4e4afaebf"><span class="__cf_email__" data-cfemail="b4d9d5c0c0dcd1c39ad6d5d0d3d1c6f4c1d7dbdada9ad1d0c1">[email&#160;protected]</span></a>
+      </div>
+    </div>
+  </aside>
+
+    <main class="main-content">
+      <div style="max-width:var(--max-w);">
 
       <div style="margin-bottom:2rem;">
-        <a href="index.html" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent2); text-decoration:none; letter-spacing:0.05em;">← Back to Matthew Badger's homepage</a>
+        <a href="index.html" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent2); text-decoration:none; letter-spacing:0.05em;">← Back to homepage</a>
       </div>
 
       <div class="section-header">
@@ -1701,11 +1745,14 @@
         <a href="http://scholar.google.com/citations?user=8KBu_yoAAAAJ" style="color:var(--accent2);">View citation statistics on Google Scholar →</a>
       </p>
 
+      </div>
     </main>
   </div>
 
   <script>
   // Filter buttons
+  
+
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
