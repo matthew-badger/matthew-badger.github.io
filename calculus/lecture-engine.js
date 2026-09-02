@@ -757,9 +757,16 @@
               var fade = document.createElement('div');
               fade.setAttribute('data-fade', '1');
               fade.style.cssText = 'position:absolute;left:0;right:0;top:' +
-                Math.round(flow.offsetTop + box - 96) + 'px;height:96px;pointer-events:none;' +
-                'background:linear-gradient(rgba(255,255,255,0),#fff 72%)';
+                Math.round(flow.offsetTop + box - 56) + 'px;height:56px;pointer-events:none;' +
+                'opacity:0;transition:opacity .18s ease;' +
+                'background:linear-gradient(rgba(255,255,255,0),rgba(255,255,255,.92))';
               host.appendChild(fade);
+              var sync = function () {
+                var left = flow.scrollHeight - flow.clientHeight - flow.scrollTop;
+                fade.style.opacity = left > 4 ? '1' : '0';
+              };
+              flow.addEventListener('scroll', sync);
+              requestAnimationFrame(sync);
             }
           }
           flow.style.transform = 'scale(' + k + ')';
