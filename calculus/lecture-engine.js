@@ -629,6 +629,19 @@
     container.innerHTML = slideHTML(slide, meta || {});
     var step = 0, rafs = [], plots = [], jsFigs = [];
 
+    // A subtle presenter cue: when visible, the next advance leaves this slide.
+    // Keeping it inside mountSlide makes it automatically respect every source of
+    // overlay steps (\pause, \uncover, plot frames, and JavaScript figure frames).
+    var advanceCue = document.createElement('div');
+    advanceCue.setAttribute('data-advance-cue', '1');
+    advanceCue.setAttribute('aria-hidden', 'true');
+    advanceCue.textContent = '›';
+    advanceCue.style.cssText =
+      'position:absolute;right:34px;bottom:104px;z-index:30;pointer-events:none;user-select:none;' +
+      'font-family:' + FM + ';font-size:32px;font-weight:600;line-height:1;color:#4f5a5c;opacity:0;' +
+      'text-shadow:0 0 3px rgba(255,255,255,.92);transition:opacity .16s ease';
+    container.appendChild(advanceCue);
+
     // plots
     Array.prototype.forEach.call(container.querySelectorAll('[data-plot]'), function (fig) {
       var cfg = JSON.parse(fig.getAttribute('data-plot'));
@@ -732,6 +745,7 @@
       });
       plots.forEach(function (p) { p.set(step); });
       jsFigs.forEach(function (j) { j.set(step); });
+      advanceCue.style.opacity = step >= slide.steps ? '.62' : '0';
     }
     setStep(0);
 
