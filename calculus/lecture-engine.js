@@ -10,6 +10,16 @@
     gold: '#F9D576', amber: '#FFB954', orange: '#FD9A44', burnt: '#F57634',
     red: '#E94C1F', red2: '#D11807', maroon: '#A01813'
   };
+  // KaTeX sizing used by every host page (IDE preview and published file alike).
+  // KaTeX's own defaults are .katex{font-size:1.21em} and .katex-display{margin:1em 0}.
+  var ENGINE_CSS = '.katex{font-size:1.04em}.katex-display{margin:0.35em 0 !important}';
+  function ensureEngineCSS() {
+    if (typeof document === 'undefined' || document.getElementById('lec-engine-css')) return;
+    var st = document.createElement('style');
+    st.id = 'lec-engine-css';
+    st.textContent = ENGINE_CSS;
+    (document.head || document.documentElement).appendChild(st);
+  }
   var FT = "'Spectral', 'Iowan Old Style', Georgia, serif";
   var FM = "'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace";
 
@@ -444,8 +454,8 @@
         '<h2 style="font-family:' + FT + ';font-size:' + px(86) + ';line-height:1.1;font-weight:600;margin:16px 0 0;color:' + C.teal + ';max-width:1400px">' + inline(slide.title) + '</h2>' +
         renderBlocks(slide.blocks) + '</div>';
     }
-    return '<div style="padding:58px 120px 132px;height:100%;box-sizing:border-box;display:flex;flex-direction:column">' +
-      (slide.title ? '<h2 style="font-family:' + FT + ';font-size:' + px(58) + ';line-height:1.15;font-weight:600;margin:0 0 46px;color:#111">' + inline(slide.title) + '</h2>' : '') +
+    return '<div style="padding:30px 120px 132px;height:100%;box-sizing:border-box;display:flex;flex-direction:column">' +
+      (slide.title ? '<h2 style="font-family:' + FT + ';font-size:' + px(58) + ';line-height:1.15;font-weight:600;margin:0 0 24px;color:#111">' + inline(slide.title) + '</h2>' : '') +
       '<div data-flow="1" style="flex:1 1 auto;min-height:0;transform-origin:top left">' + renderBlocks(slide.blocks) + '</div></div>';
   }
 
@@ -626,6 +636,7 @@
   /* ---------- mounting ---------- */
   function mountSlide(container, slide, meta, opts) {
     opts = opts || {};
+    ensureEngineCSS();
     container.innerHTML = slideHTML(slide, meta || {});
     var step = 0, rafs = [], plots = [], jsFigs = [];
 
@@ -637,9 +648,9 @@
     advanceCue.setAttribute('aria-hidden', 'true');
     advanceCue.textContent = '›';
     advanceCue.style.cssText =
-      'position:absolute;right:34px;bottom:104px;z-index:30;pointer-events:none;user-select:none;' +
-      'font-family:' + FM + ';font-size:32px;font-weight:600;line-height:1;color:#4f5a5c;opacity:0;' +
-      'text-shadow:0 0 3px rgba(255,255,255,.92);transition:opacity .16s ease';
+      'position:absolute;right:28px;top:50%;transform:translateY(-50%);z-index:30;pointer-events:none;user-select:none;' +
+      'font-family:' + FM + ';font-size:52px;line-height:1;color:#6f7c7d;opacity:0;' +
+      'transition:opacity .16s ease';
     container.appendChild(advanceCue);
 
     // plots
@@ -745,13 +756,19 @@
       });
       plots.forEach(function (p) { p.set(step); });
       jsFigs.forEach(function (j) { j.set(step); });
-      advanceCue.style.opacity = step >= slide.steps ? '.62' : '0';
+      advanceCue.style.opacity = step >= slide.steps ? '.52' : '0';
     }
     setStep(0);
 
     var flow = container.querySelector('[data-flow]');
     if (flow) {
-      requestAnimationFrame(function () {
+      var fitFlow = function () {
+        if (!flow.isConnected) return;
+        // undo any earlier fit so the measurement starts from the natural layout
+        flow.style.transform = ''; flow.style.width = ''; flow.style.height = '';
+        flow.style.flex = '1 1 auto'; flow.style.overflowY = ''; flow.scrollTop = 0;
+        var oldFade = flow.parentNode && flow.parentNode.querySelector('[data-fade]');
+        if (oldFade) oldFade.remove();
         var over = flow.scrollHeight - flow.clientHeight;
         var k = 1;
         if (over > 26) { // ignore the trailing block margin
@@ -779,6 +796,8 @@
                 var left = flow.scrollHeight - flow.clientHeight - flow.scrollTop;
                 fade.style.opacity = left > 4 ? '1' : '0';
               };
+              if (flow._lecSync) flow.removeEventListener('scroll', flow._lecSync);
+              flow._lecSync = sync;
               flow.addEventListener('scroll', sync);
               requestAnimationFrame(sync);
             }
@@ -787,6 +806,14 @@
           flow.style.width = (100 / k) + '%';
         }
         if (opts.onFit) opts.onFit(k);
+      };
+      requestAnimationFrame(function () {
+        fitFlow();
+        // web fonts (Spectral, JetBrains Mono, and each KaTeX face on first use) may still be
+        // loading at this moment; measure again once they arrive so the fit uses real metrics
+        if (document.fonts && document.fonts.status !== 'loaded') {
+          document.fonts.ready.then(function () { requestAnimationFrame(fitFlow); });
+        }
       });
     }
 
@@ -805,7 +832,7 @@
       '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' +
       '<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">' +
       '<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"><\/script>' +
-      '<style>html,body{margin:0;height:100%;background:#fff;color:#111;font-family:' + FT + '}' +
+      '<style>html,body{margin:0;height:100%;background:#fff;color:#111;font-family:' + FT + '}' + ENGINE_CSS +
       '#wrap{position:fixed;inset:0;overflow:hidden}#stage{position:absolute;top:0;left:0;width:1920px;height:1080px;transform-origin:top left;background:#fff}' +
       '#slide{position:absolute;inset:0}a{color:' + C.teal2 + '}a:hover{color:' + C.burnt + '}' +
       '#tray{position:absolute;left:0;right:0;bottom:0;height:92px;display:flex;align-items:center;gap:28px;padding:0 56px;box-sizing:border-box;' +
