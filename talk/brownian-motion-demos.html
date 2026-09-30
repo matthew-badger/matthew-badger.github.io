@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Brownian Motion Demonstrations</title>
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --grid: rgba(30,42,56,0.055);
+    --rule: #dcd7ca;
+    --panel: #ffffff;
+    --ink: #1e2a38;
+    --ink-soft: #5b6672;
+    --accent: #2f6fed;
+
+    --d1-top: #2f6fed;
+    --d1-right: #1e9e6b;
+    --d1-bottom: #c23b8f;
+    --d1-left: #d98a15;
+
+    --d2-middle: #1e9e6b;
+    --d2-corner: #2f6fed;
+
+    --d3-far: #2f6fed;
+    --d3-near: #d98a15;
+    --d3-left: #1e9e6b;
+    --d3-right: #c23b8f;
+    --d3-top: #1aa6b7;
+    --d3-bottom: #e2543f;
+    --d3-front: #d98a15;
+    --d3-back: #2f6fed;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 20px 48px;
+  }
+
+  h1 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 26px;
+    margin: 0 0 4px;
+    letter-spacing: 0.2px;
+  }
+
+  .byline {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+  }
+
+  nav.demos {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+  nav.demos a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    margin-right: 14px;
+    padding-bottom: 2px;
+    cursor: pointer;
+  }
+  nav.demos a.current {
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent);
+  }
+  nav.demos a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .demo-view[hidden] { display: none; }
+
+  .layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+  }
+
+  .canvas-card {
+    padding: 14px;
+    line-height: 0;
+  }
+
+  .demo-canvas {
+    display: block;
+    border-radius: 2px;
+    cursor: crosshair;
+  }
+  .canvas-300 { width: 300px; height: 300px; }
+  .canvas-445 { width: 445px; height: 445px; }
+
+  .side-card {
+    flex: 1;
+    min-width: 230px;
+    padding: 18px 20px;
+  }
+
+  .side-card h2 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin: 0 0 12px;
+    font-weight: 600;
+  }
+
+  .legend-caption {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0 0 12px;
+  }
+
+  .gradient-bar {
+    height: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--rule);
+    margin-bottom: 5px;
+  }
+
+  .gradient-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+
+  .divider {
+    border-top: 1px solid var(--rule);
+    margin-bottom: 16px;
+  }
+
+  .stat-row { margin-bottom: 10px; }
+
+  .stat-row .label-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  .stat-row .label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 600;
+  }
+
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex: none;
+  }
+
+  .stat-row .value {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-soft);
+  }
+
+  .bar-track {
+    height: 6px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 0.2s ease;
+  }
+
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding-top: 10px;
+    margin-top: 4px;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-soft);
+  }
+  .total-row .value {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .reset-btn {
+    margin-top: 16px;
+    width: 100%;
+    padding: 9px 0;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .reset-btn:hover { border-color: var(--ink-soft); }
+
+  .instructions {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Brownian Motion Demonstrations</h1>
+  <div class="byline"><span>Matthew Badger</span><span>July 2026</span></div>
+
+  <nav class="demos">
+    <a href="#demo1" data-target="demo1" class="current">Demo 1</a><a href="#demo2" data-target="demo2">Demo 2</a><a href="#demo3" data-target="demo3">Demo 3</a>
+  </nav>
+
+  <!-- ===================== DEMO 1 ===================== -->
+  <section class="demo-view" data-view="demo1">
+    <div class="layout">
+      <div class="card canvas-card">
+        <canvas class="demo-canvas canvas-300" height="300" width="300"></canvas>
+      </div>
+
+      <div class="card side-card">
+        <h2>Exit counts by edge</h2>
+
+        <div class="stat-row" data-edge="top">
+          <div class="label-line">
+            <span class="label"><span class="swatch" style="background:var(--d1-top)"></span>Top</span>
+            <span class="value"><span class="count">0</span> &middot; <span class="pct">0.0%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--d1-top)"></div></div>
+        </div>
+
+        <div class="stat-row" data-edge="right">
+          <div class="label-line">
+            <span class="label"><span class="swatch" style="background:var(--d1-right)"></span>Right</span>
+            <span class="value"><span class="count">0</span> &middot; <span class="pct">0.0%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--d1-right)"></div></div>
+        </div>
+
+        <div class="stat-row" data-edge="bottom">
+          <div class="label-line">
+            <span class="label"><span class="swatch" style="background:var(--d1-bottom)"></span>Bottom</span>
+            <span class="value"><span class="count">0</span> &middot; <span class="pct">0.0%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--d1-bottom)"></div></div>
+        </div>
+
+        <div class="stat-row" data-edge="left">
+          <div class="label-line">
+            <span class="label"><span class="swatch" style="background:var(--d1-left)"></span>Left</span>
+            <span class="value"><span class="count">0</span> &middot; <span class="pct">0.0%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--d1-left)"></div></div>
+        </div>
+
+        <div class="total-row"><span>Attempts</span><span class="value total-count">0</span></div>
+        <button class="reset-btn" type="button">Reset counter</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DEMO 2 ===================== -->
+  <section class="demo-view" data-view="demo2" hidden>
+    <div class="layout">
+      <div class="card canvas-card">
+        <canvas class="demo-canvas canvas-300" height="300" width="300"></canvas>
+      </div>
+
+      <div class="card side-card">
+        <h2>Exit counts by region</h2>
+
+        <div class="stat-row" data-zone="middle">
+          <div class="label-line">
+            <span class="label"><span class="swatch" style="background:var(--d2-middle)"></span>Middle third</span>
+            <span class="value"><span class="count">0</span> &middot; <span class="pct">0.0%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--d2-middle)"></div></div>
+        </div>
+
+        <div class="stat-row" data-zone="corner">
+          <div class="label-line">
+            <span class="label"><span class="swatch" style="background:var(--d2-corner)"></span>Corner region</span>
+            <span class="value"><span class="count">0</span> &middot; <span class="pct">0.0%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--d2-corner)"></div></div>
+        </div>
+
+        <div class="total-row"><span>Attempts</span><span class="value total-count">0</span></div>
+        <button class="reset-btn" type="button">Reset counter</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DEMO 3 ===================== -->
+  <section class="demo-view" data-view="demo3" hidden>
+    <div class="layout">
+      <div class="card canvas-card">
+        <canvas class="demo-canvas canvas-445" height="445" width="445"></canvas>
+      </div>
+
+      <div class="card side-card">
+        <h2>Depth key</h2>
+        <p class="legend-caption">The moving point's color follows its depth: cool blue is the far side of the cube, warm amber is the near side.</p>
+        <div class="gradient-bar" style="background: linear-gradient(90deg, var(--d3-far), var(--d3-near));"></div>
+        <div class="gradient-labels"><span>far</span><span>near</span></div>
+
+        <div class="divider"></div>
+
+        <h2>Exit counts by face</h2>
+
+        <div class="stat-row" data-face="left">
+          <div class="label-line">
+            <span class="label"><span class="swatch" style="background:var(--d3-left)"></span>Left</span>
+            <span class="value"><span class="count">0</span> &middot; <span class="pct">0.0%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--d3-left)"></div></div>
+        </div>
+
+        <div class="stat-row" data-face="right">
+          <div class="label-line">
+            <span class="label"><span class="swatch" style="background:var(--d3-right)"></span>Right</span>
+            <span class="value"><span class="count">0</span> &middot; <span class="pct">0.0%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--d3-right)"></div></div>
+        </div>
+
+        <div class="stat-row" data-face="top">
+          <div class="label-line">
+            <span class="label"><span class="swatch" style="background:var(--d3-top)"></span>Top</span>
+            <span class="value"><span class="count">0</span> &middot; <span class="pct">0.0%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--d3-top)"></div></div>
+        </div>
+
+        <div class="stat-row" data-face="bottom">
+          <div class="label-line">
+            <span class="label"><span class="swatch" style="background:var(--d3-bottom)"></span>Bottom</span>
+            <span class="value"><span class="count">0</span> &middot; <span class="pct">0.0%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--d3-bottom)"></div></div>
+        </div>
+
+        <div class="stat-row" data-face="front">
+          <div class="label-line">
+            <span class="label"><span class="swatch" style="background:var(--d3-front)"></span>Front (near)</span>
+            <span class="value"><span class="count">0</span> &middot; <span class="pct">0.0%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--d3-front)"></div></div>
+        </div>
+
+        <div class="stat-row" data-face="back">
+          <div class="label-line">
+            <span class="label"><span class="swatch" style="background:var(--d3-back)"></span>Back (far)</span>
+            <span class="value"><span class="count">0</span> &middot; <span class="pct">0.0%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="background:var(--d3-back)"></div></div>
+        </div>
+
+        <div class="total-row"><span>Attempts</span><span class="value total-count">0</span></div>
+        <button class="reset-btn" type="button">Reset counter</button>
+      </div>
+    </div>
+  </section>
+
+  <p class="instructions">Click anywhere inside the square to start a new trial.</p>
+
+</div>
+
+<script>
+// ---------- tab switching ----------
+(function () {
+  var navLinks = document.querySelectorAll('nav.demos a');
+  var views = document.querySelectorAll('.demo-view');
+  var valid = ['demo1', 'demo2', 'demo3'];
+
+  function showView(name) {
+    views.forEach(function (v) { v.hidden = (v.getAttribute('data-view') !== name); });
+    navLinks.forEach(function (a) { a.classList.toggle('current', a.getAttribute('data-target') === name); });
+  }
+
+  navLinks.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var name = a.getAttribute('data-target');
+      showView(name);
+      history.replaceState(null, '', '#' + name);
+    });
+  });
+
+  var initial = (location.hash || '#demo1').slice(1);
+  if (valid.indexOf(initial) === -1) { initial = 'demo1'; }
+  showView(initial);
+})();
+
+// ---------- Demo 1: square, exits by edge ----------
+(function () {
+  var root = document.querySelector('[data-view="demo1"]');
+  var EDGE_COLOR = { top: "#2f6fed", right: "#1e9e6b", bottom: "#c23b8f", left: "#d98a15" };
+  var PATH_COLOR = "#1e2a38";
+  var START_COLOR = "#1e2a38";
+  var DOMAIN_FILL = "#fbf3d8";
+  var BOUND = { min: 5, max: 295 };
+
+  var cvs = root.querySelector('canvas');
+  var c = cvs.getContext("2d");
+
+  var counts = { top: 0, right: 0, bottom: 0, left: 0 };
+  var total = 0;
+
+  var xpos, ypos, xold, yold, u1, u2;
+  var reset = true;
+  var loop = true;
+
+  xpos = 150;
+  ypos = 150;
+
+  cvs.addEventListener("click", function (event) {
+    reset = true;
+    xpos = event.offsetX;
+    ypos = event.offsetY;
+    if (!loop) { loop = true; nextFrame(); }
+  }, false);
+
+  root.querySelector('.reset-btn').addEventListener("click", function () {
+    counts = { top: 0, right: 0, bottom: 0, left: 0 };
+    total = 0;
+    renderStats();
+  });
+
+  function renderStats() {
+    root.querySelectorAll('.stat-row[data-edge]').forEach(function (row) {
+      var edge = row.getAttribute('data-edge');
+      var pct = total > 0 ? (100 * counts[edge] / total) : 0;
+      row.querySelector(".count").textContent = counts[edge];
+      row.querySelector(".pct").textContent = pct.toFixed(1) + "%";
+      row.querySelector(".bar-fill").style.width = pct + "%";
+    });
+    root.querySelector('.total-count').textContent = total;
+  }
+
+  function findExit() {
+    var dx = xpos - xold, dy = ypos - yold;
+    var candidates = [];
+
+    if (dx !== 0) {
+      var tL = (BOUND.min - xold) / dx, yL = yold + tL * dy;
+      if (tL >= 0 && tL <= 1 && yL >= BOUND.min && yL <= BOUND.max) {
+        candidates.push({ t: tL, edge: "left", x: BOUND.min, y: yL });
+      }
+      var tR = (BOUND.max - xold) / dx, yR = yold + tR * dy;
+      if (tR >= 0 && tR <= 1 && yR >= BOUND.min && yR <= BOUND.max) {
+        candidates.push({ t: tR, edge: "right", x: BOUND.max, y: yR });
+      }
+    }
+    if (dy !== 0) {
+      var tT = (BOUND.min - yold) / dy, xT = xold + tT * dx;
+      if (tT >= 0 && tT <= 1 && xT >= BOUND.min && xT <= BOUND.max) {
+        candidates.push({ t: tT, edge: "top", x: xT, y: BOUND.min });
+      }
+      var tB = (BOUND.max - yold) / dy, xB = xold + tB * dx;
+      if (tB >= 0 && tB <= 1 && xB >= BOUND.min && xB <= BOUND.max) {
+        candidates.push({ t: tB, edge: "bottom", x: xB, y: BOUND.max });
+      }
+    }
+    candidates.sort(function (a, b) { return a.t - b.t; });
+    return candidates[0];
+  }
+
+  function nextFrame() {
+    if (reset) {
+      reset = false;
+      xold = xpos;
+      yold = ypos;
+
+      c.fillStyle = "#ffffff";
+      c.fillRect(0, 0, 300, 300);
+
+      c.fillStyle = DOMAIN_FILL;
+      c.fillRect(BOUND.min, BOUND.min, BOUND.max - BOUND.min, BOUND.max - BOUND.min);
+
+      c.lineWidth = 3;
+      c.strokeStyle = EDGE_COLOR.top;
+      c.beginPath(); c.moveTo(5, 5); c.lineTo(295, 5); c.stroke();
+
+      c.strokeStyle = EDGE_COLOR.right;
+      c.beginPath(); c.moveTo(295, 5); c.lineTo(295, 295); c.stroke();
+
+      c.strokeStyle = EDGE_COLOR.bottom;
+      c.beginPath(); c.moveTo(295, 295); c.lineTo(5, 295); c.stroke();
+
+      c.strokeStyle = EDGE_COLOR.left;
+      c.beginPath(); c.moveTo(5, 295); c.lineTo(5, 5); c.stroke();
+
+      c.lineWidth = 2;
+
+      c.fillStyle = START_COLOR;
+      c.beginPath();
+      c.arc(xpos, ypos, 5, 0, 2 * Math.PI, false);
+      c.fill();
+    }
+
+    if (xpos <= BOUND.min || xpos >= BOUND.max || ypos <= BOUND.min || ypos >= BOUND.max) {
+      var exit = findExit();
+      var exitX = exit ? exit.x : xpos;
+      var exitY = exit ? exit.y : ypos;
+      var edge = exit ? exit.edge : "top";
+
+      c.strokeStyle = PATH_COLOR;
+      c.beginPath();
+      c.moveTo(xold, yold);
+      c.lineTo(exitX, exitY);
+      c.stroke();
+
+      c.fillStyle = EDGE_COLOR[edge];
+      c.beginPath();
+      c.arc(exitX, exitY, 5, 0, 2 * Math.PI, false);
+      c.fill();
+
+      counts[edge] += 1;
+      total += 1;
+      renderStats();
+
+      loop = false;
+    } else {
+      c.strokeStyle = PATH_COLOR;
+      c.beginPath();
+      c.moveTo(xold, yold);
+      c.lineTo(xpos, ypos);
+      c.stroke();
+
+      u1 = Math.random();
+      u2 = Math.random();
+      xold = xpos;
+      yold = ypos;
+      xpos += 4 * Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+      ypos += 4 * Math.sqrt(-2 * Math.log(u1)) * Math.sin(2 * Math.PI * u2);
+    }
+
+    if (loop) { setTimeout(nextFrame, 5); }
+  }
+
+  nextFrame();
+})();
+
+// ---------- Demo 2: square, exits by middle-third vs corner ----------
+(function () {
+  var root = document.querySelector('[data-view="demo2"]');
+  var ZONE_COLOR = { middle: "#1e9e6b", corner: "#2f6fed" };
+  var PATH_COLOR = "#1e2a38";
+  var START_COLOR = "#1e2a38";
+  var DOMAIN_FILL = "#fbf3d8";
+  var BOUND = { min: 5, max: 295 };
+  var THIRD = { low: 102, high: 199 };
+
+  var cvs = root.querySelector('canvas');
+  var c = cvs.getContext("2d");
+
+  var counts = { middle: 0, corner: 0 };
+  var total = 0;
+
+  var xpos, ypos, xold, yold, u1, u2;
+  var reset = true;
+  var loop = true;
+
+  xpos = 150;
+  ypos = 150;
+
+  cvs.addEventListener("click", function (event) {
+    reset = true;
+    xpos = event.offsetX;
+    ypos = event.offsetY;
+    if (!loop) { loop = true; nextFrame(); }
+  }, false);
+
+  root.querySelector('.reset-btn').addEventListener("click", function () {
+    counts = { middle: 0, corner: 0 };
+    total = 0;
+    renderStats();
+  });
+
+  function renderStats() {
+    root.querySelectorAll('.stat-row[data-zone]').forEach(function (row) {
+      var zone = row.getAttribute('data-zone');
+      var pct = total > 0 ? (100 * counts[zone] / total) : 0;
+      row.querySelector(".count").textContent = counts[zone];
+      row.querySelector(".pct").textContent = pct.toFixed(1) + "%";
+      row.querySelector(".bar-fill").style.width = pct + "%";
+    });
+    root.querySelector('.total-count').textContent = total;
+  }
+
+  function findExit() {
+    var dx = xpos - xold, dy = ypos - yold;
+    var candidates = [];
+
+    if (dx !== 0) {
+      var tL = (BOUND.min - xold) / dx, yL = yold + tL * dy;
+      if (tL >= 0 && tL <= 1 && yL >= BOUND.min && yL <= BOUND.max) {
+        candidates.push({ t: tL, edge: "left", x: BOUND.min, y: yL });
+      }
+      var tR = (BOUND.max - xold) / dx, yR = yold + tR * dy;
+      if (tR >= 0 && tR <= 1 && yR >= BOUND.min && yR <= BOUND.max) {
+        candidates.push({ t: tR, edge: "right", x: BOUND.max, y: yR });
+      }
+    }
+    if (dy !== 0) {
+      var tT = (BOUND.min - yold) / dy, xT = xold + tT * dx;
+      if (tT >= 0 && tT <= 1 && xT >= BOUND.min && xT <= BOUND.max) {
+        candidates.push({ t: tT, edge: "top", x: xT, y: BOUND.min });
+      }
+      var tB = (BOUND.max - yold) / dy, xB = xold + tB * dx;
+      if (tB >= 0 && tB <= 1 && xB >= BOUND.min && xB <= BOUND.max) {
+        candidates.push({ t: tB, edge: "bottom", x: xB, y: BOUND.max });
+      }
+    }
+    candidates.sort(function (a, b) { return a.t - b.t; });
+    return candidates[0];
+  }
+
+  function classifyZone(exit) {
+    var pos = (exit.edge === "top" || exit.edge === "bottom") ? exit.x : exit.y;
+    return (pos > THIRD.low && pos < THIRD.high) ? "middle" : "corner";
+  }
+
+  function nextFrame() {
+    if (reset) {
+      reset = false;
+      xold = xpos;
+      yold = ypos;
+
+      c.fillStyle = "#ffffff";
+      c.fillRect(0, 0, 300, 300);
+
+      c.fillStyle = DOMAIN_FILL;
+      c.fillRect(BOUND.min, BOUND.min, BOUND.max - BOUND.min, BOUND.max - BOUND.min);
+
+      c.lineWidth = 3;
+
+      c.strokeStyle = ZONE_COLOR.corner;
+      c.beginPath();
+      c.moveTo(5, 5); c.lineTo(102, 5);
+      c.moveTo(199, 5); c.lineTo(295, 5); c.lineTo(295, 102);
+      c.moveTo(295, 199); c.lineTo(295, 295); c.lineTo(199, 295);
+      c.moveTo(102, 295); c.lineTo(5, 295); c.lineTo(5, 199);
+      c.moveTo(5, 102); c.lineTo(5, 5);
+      c.stroke();
+
+      c.strokeStyle = ZONE_COLOR.middle;
+      c.beginPath();
+      c.moveTo(102, 5); c.lineTo(199, 5);
+      c.moveTo(102, 295); c.lineTo(199, 295);
+      c.moveTo(5, 102); c.lineTo(5, 199);
+      c.moveTo(295, 102); c.lineTo(295, 199);
+      c.stroke();
+
+      c.lineWidth = 2;
+
+      c.fillStyle = START_COLOR;
+      c.beginPath();
+      c.arc(xpos, ypos, 5, 0, 2 * Math.PI, false);
+      c.fill();
+    }
+
+    if (xpos <= BOUND.min || xpos >= BOUND.max || ypos <= BOUND.min || ypos >= BOUND.max) {
+      var exit = findExit();
+      var exitX = exit ? exit.x : xpos;
+      var exitY = exit ? exit.y : ypos;
+      var zone = exit ? classifyZone(exit) : "corner";
+
+      c.strokeStyle = PATH_COLOR;
+      c.beginPath();
+      c.moveTo(xold, yold);
+      c.lineTo(exitX, exitY);
+      c.stroke();
+
+      c.fillStyle = ZONE_COLOR[zone];
+      c.beginPath();
+      c.arc(exitX, exitY, 5, 0, 2 * Math.PI, false);
+      c.fill();
+
+      counts[zone] += 1;
+      total += 1;
+      renderStats();
+
+      loop = false;
+    } else {
+      c.strokeStyle = PATH_COLOR;
+      c.beginPath();
+      c.moveTo(xold, yold);
+      c.lineTo(xpos, ypos);
+      c.stroke();
+
+      u1 = Math.random();
+      u2 = Math.random();
+      xold = xpos;
+      yold = ypos;
+      xpos += 4 * Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+      ypos += 4 * Math.sqrt(-2 * Math.log(u1)) * Math.sin(2 * Math.PI * u2);
+    }
+
+    if (loop) { setTimeout(nextFrame, 5); }
+  }
+
+  nextFrame();
+})();
+
+// ---------- Demo 3: cube, exits by face ----------
+(function () {
+  var root = document.querySelector('[data-view="demo3"]');
+  var FAR_Z = -145, NEAR_Z = 145;
+  var BOUND = { min: 77, max: 367 };
+  var FAR_RGB = [47, 111, 237];
+  var NEAR_RGB = [217, 138, 21];
+  var PATH_ALPHA = 1;
+  var START_COLOR = "#1e2a38";
+  var DOMAIN_FILL_RGB = "251,243,216";
+
+  var FACE_COLOR = {
+    left: "#1e9e6b",
+    right: "#c23b8f",
+    top: "#1aa6b7",
+    bottom: "#e2543f",
+    front: "#d98a15",
+    back: "#2f6fed"
+  };
+
+  var cvs = root.querySelector('canvas');
+  var c = cvs.getContext("2d");
+
+  var counts = { left: 0, right: 0, top: 0, bottom: 0, front: 0, back: 0 };
+  var total = 0;
+
+  var xpos, ypos, zpos, xold, yold, zold, u1, u2, u3;
+  var reset = true;
+  var loop = true;
+
+  xpos = 222;
+  ypos = 222;
+  zpos = 0;
+
+  function slantOffset(z) {
+    return z >= 0 ? z * 73 / 145 : z * 72 / 145;
+  }
+  function slant(x, z) {
+    return x + slantOffset(z);
+  }
+
+  function depthColor(z, alpha) {
+    var t = (z - FAR_Z) / (NEAR_Z - FAR_Z);
+    var r = Math.round(FAR_RGB[0] + t * (NEAR_RGB[0] - FAR_RGB[0]));
+    var g = Math.round(FAR_RGB[1] + t * (NEAR_RGB[1] - FAR_RGB[1]));
+    var b = Math.round(FAR_RGB[2] + t * (NEAR_RGB[2] - FAR_RGB[2]));
+    return "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
+  }
+
+  var WALL_STEP = 10;
+  var wallZs = [];
+  for (var wz = FAR_Z; wz <= NEAR_Z; wz += WALL_STEP) { wallZs.push(wz); }
+
+  function drawWallSquare(z) {
+    var off = slantOffset(z);
+    var isFace = (z === FAR_Z || z === NEAR_Z);
+
+    c.fillStyle = "rgba(" + DOMAIN_FILL_RGB + ",0.025)";
+    c.fillRect(77 + off, 77 + off, 290, 290);
+
+    c.lineWidth = isFace ? 3 : 1;
+    c.strokeStyle = depthColor(z, isFace ? 0.55 : 0.15);
+    c.beginPath();
+    c.moveTo(77 + off, 77 + off);
+    c.lineTo(367 + off, 77 + off);
+    c.lineTo(367 + off, 367 + off);
+    c.lineTo(77 + off, 367 + off);
+    c.lineTo(77 + off, 77 + off);
+    c.stroke();
+  }
+
+  function drawWalls() {
+    for (var i = 0; i < wallZs.length; i++) { drawWallSquare(wallZs[i]); }
+  }
+
+  function drawCornerEdges() {
+    var corners = [[77, 77], [77, 367], [367, 367], [367, 77]];
+    var offFar = slantOffset(FAR_Z), offNear = slantOffset(NEAR_Z);
+    corners.forEach(function (p) {
+      var x0 = p[0] + offFar, y0 = p[1] + offFar;
+      var x1 = p[0] + offNear, y1 = p[1] + offNear;
+      var grad = c.createLinearGradient(x0, y0, x1, y1);
+      grad.addColorStop(0, depthColor(FAR_Z, 0.8));
+      grad.addColorStop(1, depthColor(NEAR_Z, 0.8));
+      c.strokeStyle = grad;
+      c.lineWidth = 2;
+      c.beginPath();
+      c.moveTo(x0, y0);
+      c.lineTo(x1, y1);
+      c.stroke();
+    });
+  }
+
+  function drawStartPlane() {
+    c.fillStyle = "rgba(30,42,56,0.05)";
+    c.fillRect(77, 77, 290, 290);
+
+    c.lineWidth = 2;
+    c.strokeStyle = "rgba(30,42,56,0.6)";
+    c.setLineDash([6, 4]);
+    c.strokeRect(77, 77, 290, 290);
+    c.setLineDash([]);
+  }
+
+  function renderStats() {
+    root.querySelectorAll('.stat-row[data-face]').forEach(function (row) {
+      var face = row.getAttribute('data-face');
+      var pct = total > 0 ? (100 * counts[face] / total) : 0;
+      row.querySelector(".count").textContent = counts[face];
+      row.querySelector(".pct").textContent = pct.toFixed(1) + "%";
+      row.querySelector(".bar-fill").style.width = pct + "%";
+    });
+    root.querySelector('.total-count').textContent = total;
+  }
+
+  root.querySelector('.reset-btn').addEventListener("click", function () {
+    counts = { left: 0, right: 0, top: 0, bottom: 0, front: 0, back: 0 };
+    total = 0;
+    renderStats();
+  });
+
+  cvs.addEventListener("click", function (event) {
+    reset = true;
+    xpos = event.offsetX;
+    ypos = event.offsetY;
+    zpos = 0;
+    if (!loop) { loop = true; nextFrame(); }
+  }, false);
+
+  function findExit() {
+    var dx = xpos - xold, dy = ypos - yold, dz = zpos - zold;
+    var candidates = [];
+
+    function check(t, face, cx, cy, cz) {
+      if (t >= 0 && t <= 1 &&
+          cx >= BOUND.min - 0.01 && cx <= BOUND.max + 0.01 &&
+          cy >= BOUND.min - 0.01 && cy <= BOUND.max + 0.01 &&
+          cz >= FAR_Z - 0.01 && cz <= NEAR_Z + 0.01) {
+        candidates.push({ t: t, face: face, x: cx, y: cy, z: cz });
+      }
+    }
+
+    if (dx !== 0) {
+      var tL = (BOUND.min - xold) / dx;
+      check(tL, "left", BOUND.min, yold + tL * dy, zold + tL * dz);
+      var tR = (BOUND.max - xold) / dx;
+      check(tR, "right", BOUND.max, yold + tR * dy, zold + tR * dz);
+    }
+    if (dy !== 0) {
+      var tT = (BOUND.min - yold) / dy;
+      check(tT, "top", xold + tT * dx, BOUND.min, zold + tT * dz);
+      var tB = (BOUND.max - yold) / dy;
+      check(tB, "bottom", xold + tB * dx, BOUND.max, zold + tB * dz);
+    }
+    if (dz !== 0) {
+      var tBack = (FAR_Z - zold) / dz;
+      check(tBack, "back", xold + tBack * dx, yold + tBack * dy, FAR_Z);
+      var tFront = (NEAR_Z - zold) / dz;
+      check(tFront, "front", xold + tFront * dx, yold + tFront * dy, NEAR_Z);
+    }
+
+    candidates.sort(function (a, b) { return a.t - b.t; });
+    return candidates[0];
+  }
+
+  function nextFrame() {
+    if (reset) {
+      reset = false;
+      xold = xpos;
+      yold = ypos;
+      zold = zpos;
+
+      c.fillStyle = "#ffffff";
+      c.fillRect(0, 0, 445, 445);
+
+      drawWalls();
+      drawCornerEdges();
+      drawStartPlane();
+
+      c.fillStyle = START_COLOR;
+      c.beginPath();
+      c.arc(slant(xpos, zpos), slant(ypos, zpos), 5, 0, 2 * Math.PI, false);
+      c.fill();
+    }
+
+    var overshoot = xpos <= BOUND.min || xpos >= BOUND.max ||
+                     ypos <= BOUND.min || ypos >= BOUND.max ||
+                     zpos <= FAR_Z || zpos >= NEAR_Z;
+
+    if (overshoot) {
+      var exit = findExit();
+      var ex = exit ? exit.x : xpos;
+      var ey = exit ? exit.y : ypos;
+      var ez = exit ? exit.z : zpos;
+      var face = exit ? exit.face : "front";
+
+      c.lineWidth = 2.5;
+      c.strokeStyle = depthColor(ez, PATH_ALPHA);
+      c.beginPath();
+      c.moveTo(slant(xold, zold), slant(yold, zold));
+      c.lineTo(slant(ex, ez), slant(ey, ez));
+      c.stroke();
+
+      c.fillStyle = FACE_COLOR[face];
+      c.beginPath();
+      c.arc(slant(ex, ez), slant(ey, ez), 5, 0, 2 * Math.PI, false);
+      c.fill();
+
+      counts[face] += 1;
+      total += 1;
+      renderStats();
+
+      loop = false;
+    } else {
+      c.lineWidth = 2.5;
+      c.strokeStyle = depthColor(zpos, PATH_ALPHA);
+      c.beginPath();
+      c.moveTo(slant(xold, zold), slant(yold, zold));
+      c.lineTo(slant(xpos, zpos), slant(ypos, zpos));
+      c.stroke();
+
+      u1 = Math.random();
+      u2 = Math.random();
+      u3 = Math.random();
+      xold = xpos;
+      yold = ypos;
+      zold = zpos;
+      xpos += 4 * Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2) * Math.sin(2 * Math.PI * u3);
+      ypos += 4 * Math.sqrt(-2 * Math.log(u1)) * Math.sin(2 * Math.PI * u2) * Math.sin(2 * Math.PI * u3);
+      zpos += 4 * Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u3);
+    }
+
+    if (loop) { setTimeout(nextFrame, 5); }
+  }
+
+  nextFrame();
+})();
+</script>
+</body>
+</html>
