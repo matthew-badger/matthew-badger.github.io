@@ -617,6 +617,70 @@
       gap: 0.5rem;
     }
 
+    /* ── Square Packing banner ── */
+    .sp-banner {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+      padding: 2rem 2.5rem;
+      background: #0f1626;
+      background-image: radial-gradient(circle at 85% 30%, rgba(116,145,253,0.18), transparent 55%);
+      color: #f4f1ea;
+      text-decoration: none;
+      border-radius: 6px;
+      box-shadow: 4px 4px 0 var(--ink-mid);
+      animation: fadeUp 0.6s ease both;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .sp-banner:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink-mid); }
+    .sp-banner:focus-visible { outline: 3px solid var(--accent2); outline-offset: 3px; }
+    .sp-text { flex: 1; min-width: 0; }
+    .sp-eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #ffb020;
+      margin-bottom: 0.4rem;
+    }
+    .sp-title {
+      font-size: 2.6rem;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+    }
+    .sp-blurb { font-size: 1.05rem; line-height: 1.6; color: #c3cad9; max-width: 32rem; }
+    .sp-cta {
+      display: inline-block;
+      margin-top: 1.2rem;
+      padding: 0.55rem 1.3rem;
+      border-radius: 2rem;
+      background: #f4f1ea;
+      color: #0f1626;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .sp-banner:hover .sp-cta { background: #ffb020; }
+    .sp-art { flex: none; width: 300px; height: auto; display: block; }
+    .sp-art text {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      fill: #141a2a;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+    .sp-lift { animation: sp-bob 2.4s ease-in-out infinite; }
+    @keyframes sp-bob { 50% { transform: translateY(-1.2px); } }
+    @media (prefers-reduced-motion: reduce) { .sp-lift, .sp-banner { animation: none; } }
+    @media (max-width: 1100px) {
+      .sp-banner { flex-direction: column-reverse; align-items: stretch; gap: 1.5rem; padding: 1.5rem; }
+      .sp-art { width: 100%; max-width: 320px; margin: 0 auto; }
+      .sp-title { font-size: 2.1rem; }
+    }
+
     /* ── Utility ── */
     p + p { margin-top: 0.8em; }
 
@@ -717,6 +781,29 @@
 
   <!-- ── Main ── -->
   <main class="main" id="main" style="background: rgba(245,245,245,.98)">
+    <!-- Square Packing banner -->
+    <a class="sp-banner" href="/square-packing-game/">
+      <div class="sp-text">
+        <div class="sp-eyebrow">New &middot; A puzzle game</div>
+        <div class="sp-title">Square Packing</div>
+        <p class="sp-blurb">Fit every square into the smallest possible square frame. Twenty-nine levels, from four squares to eight, with every answer computed from exact formulas for optimal packings.</p>
+        <span class="sp-cta">Play the game &rarr;</span>
+      </div>
+      <svg class="sp-art" viewBox="-1.5 0 52.5 39" role="img" aria-label="Seven squares packed in a 36 by 36 frame, with the smallest square lifted out of its place in the middle">
+      <rect x="-0.35" y="1.15" width="36.7" height="36.7" rx="0.6" fill="#131c30" stroke="#f4f1ea" stroke-width="0.7"/>
+      <path d="M2 3.5h0M2 5.5h0M2 7.5h0M2 9.5h0M2 11.5h0M2 13.5h0M2 15.5h0M2 17.5h0M2 19.5h0M2 21.5h0M2 23.5h0M2 25.5h0M2 27.5h0M2 29.5h0M2 31.5h0M2 33.5h0M2 35.5h0M4 3.5h0M4 5.5h0M4 7.5h0M4 9.5h0M4 11.5h0M4 13.5h0M4 15.5h0M4 17.5h0M4 19.5h0M4 21.5h0M4 23.5h0M4 25.5h0M4 27.5h0M4 29.5h0M4 31.5h0M4 33.5h0M4 35.5h0M6 3.5h0M6 5.5h0M6 7.5h0M6 9.5h0M6 11.5h0M6 13.5h0M6 15.5h0M6 17.5h0M6 19.5h0M6 21.5h0M6 23.5h0M6 25.5h0M6 27.5h0M6 29.5h0M6 31.5h0M6 33.5h0M6 35.5h0M8 3.5h0M8 5.5h0M8 7.5h0M8 9.5h0M8 11.5h0M8 13.5h0M8 15.5h0M8 17.5h0M8 19.5h0M8 21.5h0M8 23.5h0M8 25.5h0M8 27.5h0M8 29.5h0M8 31.5h0M8 33.5h0M8 35.5h0M10 3.5h0M10 5.5h0M10 7.5h0M10 9.5h0M10 11.5h0M10 13.5h0M10 15.5h0M10 17.5h0M10 19.5h0M10 21.5h0M10 23.5h0M10 25.5h0M10 27.5h0M10 29.5h0M10 31.5h0M10 33.5h0M10 35.5h0M12 3.5h0M12 5.5h0M12 7.5h0M12 9.5h0M12 11.5h0M12 13.5h0M12 15.5h0M12 17.5h0M12 19.5h0M12 21.5h0M12 23.5h0M12 25.5h0M12 27.5h0M12 29.5h0M12 31.5h0M12 33.5h0M12 35.5h0M14 3.5h0M14 5.5h0M14 7.5h0M14 9.5h0M14 11.5h0M14 13.5h0M14 15.5h0M14 17.5h0M14 19.5h0M14 21.5h0M14 23.5h0M14 25.5h0M14 27.5h0M14 29.5h0M14 31.5h0M14 33.5h0M14 35.5h0M16 3.5h0M16 5.5h0M16 7.5h0M16 9.5h0M16 11.5h0M16 13.5h0M16 15.5h0M16 17.5h0M16 19.5h0M16 21.5h0M16 23.5h0M16 25.5h0M16 27.5h0M16 29.5h0M16 31.5h0M16 33.5h0M16 35.5h0M18 3.5h0M18 5.5h0M18 7.5h0M18 9.5h0M18 11.5h0M18 13.5h0M18 15.5h0M18 17.5h0M18 19.5h0M18 21.5h0M18 23.5h0M18 25.5h0M18 27.5h0M18 29.5h0M18 31.5h0M18 33.5h0M18 35.5h0M20 3.5h0M20 5.5h0M20 7.5h0M20 9.5h0M20 11.5h0M20 13.5h0M20 15.5h0M20 17.5h0M20 19.5h0M20 21.5h0M20 23.5h0M20 25.5h0M20 27.5h0M20 29.5h0M20 31.5h0M20 33.5h0M20 35.5h0M22 3.5h0M22 5.5h0M22 7.5h0M22 9.5h0M22 11.5h0M22 13.5h0M22 15.5h0M22 17.5h0M22 19.5h0M22 21.5h0M22 23.5h0M22 25.5h0M22 27.5h0M22 29.5h0M22 31.5h0M22 33.5h0M22 35.5h0M24 3.5h0M24 5.5h0M24 7.5h0M24 9.5h0M24 11.5h0M24 13.5h0M24 15.5h0M24 17.5h0M24 19.5h0M24 21.5h0M24 23.5h0M24 25.5h0M24 27.5h0M24 29.5h0M24 31.5h0M24 33.5h0M24 35.5h0M26 3.5h0M26 5.5h0M26 7.5h0M26 9.5h0M26 11.5h0M26 13.5h0M26 15.5h0M26 17.5h0M26 19.5h0M26 21.5h0M26 23.5h0M26 25.5h0M26 27.5h0M26 29.5h0M26 31.5h0M26 33.5h0M26 35.5h0M28 3.5h0M28 5.5h0M28 7.5h0M28 9.5h0M28 11.5h0M28 13.5h0M28 15.5h0M28 17.5h0M28 19.5h0M28 21.5h0M28 23.5h0M28 25.5h0M28 27.5h0M28 29.5h0M28 31.5h0M28 33.5h0M28 35.5h0M30 3.5h0M30 5.5h0M30 7.5h0M30 9.5h0M30 11.5h0M30 13.5h0M30 15.5h0M30 17.5h0M30 19.5h0M30 21.5h0M30 23.5h0M30 25.5h0M30 27.5h0M30 29.5h0M30 31.5h0M30 33.5h0M30 35.5h0M32 3.5h0M32 5.5h0M32 7.5h0M32 9.5h0M32 11.5h0M32 13.5h0M32 15.5h0M32 17.5h0M32 19.5h0M32 21.5h0M32 23.5h0M32 25.5h0M32 27.5h0M32 29.5h0M32 31.5h0M32 33.5h0M32 35.5h0M34 3.5h0M34 5.5h0M34 7.5h0M34 9.5h0M34 11.5h0M34 13.5h0M34 15.5h0M34 17.5h0M34 19.5h0M34 21.5h0M34 23.5h0M34 25.5h0M34 27.5h0M34 29.5h0M34 31.5h0M34 33.5h0M34 35.5h0" stroke="#2c3a5c" stroke-width="0.35" stroke-linecap="round"/>
+      <g><rect x="0.25" y="18.75" width="18.5" height="18.5" rx="0.55" fill="#7491fd"/><rect x="0.25" y="36.55" width="18.5" height="0.7" rx="0.3" fill="#000" fill-opacity=".22"/><text x="9.5" y="28" font-size="6.20">19</text></g>
+      <g><rect x="20.25" y="21.75" width="15.5" height="15.5" rx="0.55" fill="#ff6151"/><rect x="20.25" y="36.55" width="15.5" height="0.7" rx="0.3" fill="#000" fill-opacity=".22"/><text x="28" y="29.5" font-size="6.20">16</text></g>
+      <g><rect x="0.25" y="1.75" width="12.5" height="12.5" rx="0.55" fill="#11b981"/><rect x="0.25" y="13.55" width="12.5" height="0.7" rx="0.3" fill="#000" fill-opacity=".22"/><text x="6.5" y="8" font-size="5.46">13</text></g>
+      <g><rect x="13.25" y="1.75" width="11.5" height="11.5" rx="0.55" fill="#d27eb1"/><rect x="13.25" y="12.55" width="11.5" height="0.7" rx="0.3" fill="#000" fill-opacity=".22"/><text x="19" y="7.5" font-size="5.04">12</text></g>
+      <g><rect x="26.25" y="1.75" width="9.5" height="9.5" rx="0.55" fill="#a0ebff"/><rect x="26.25" y="10.55" width="9.5" height="0.7" rx="0.3" fill="#000" fill-opacity=".22"/><text x="31" y="6.5" font-size="4.20">10</text></g>
+      <g><rect x="27.25" y="12.75" width="8.5" height="8.5" rx="0.55" fill="#ffff7a"/><rect x="27.25" y="20.55" width="8.5" height="0.7" rx="0.3" fill="#000" fill-opacity=".22"/><text x="31.5" y="17" font-size="3.78">9</text></g>
+      <rect x="19.4" y="13.9" width="7.2" height="7.2" rx="0.5" fill="none" stroke="#f2b800" stroke-width="0.45" stroke-dasharray="1.2 0.9"/>
+      <path d="M39.9 12.5 C 37 4.5, 31 7.5, 24.5 14.7" fill="none" stroke="#f4f1ea" stroke-width="0.4" stroke-dasharray="0.2 1" stroke-linecap="round"/>
+      <g class="sp-lift"><rect x="40.75" y="8.75" width="7.5" height="7.5" rx="0.55" fill="#f2b800"/><rect x="40.75" y="15.55" width="7.5" height="0.7" rx="0.3" fill="#000" fill-opacity=".22"/><text x="44.5" y="12.5" font-size="3.36">8</text></g>
+      </svg>
+    </a>
+
     <!-- Hero -->
     <div class="hero" id="top">
       <div class="hero-text">
